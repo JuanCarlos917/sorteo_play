@@ -1,28 +1,28 @@
 const { User } = require('../index');
 
 // Obtener todos los usuarios
-const getAllUsers = async (req, res) => {
+const getAllUsers = async (req, res, next) => {
 	try {
 		const users = await User.findAll();
 		res.status(200).json(users);
 	} catch (error) {
-		res.status(500).json({ error: 'Error fetching users' });
+		next(error);
 	}
 };
 
 // Crear un nuevo usuario
-const createUser = async (req, res) => {
+const createUser = async (req, res, next) => {
 	const { name, email, phone } = req.body;
 	try {
 		const newUser = await User.create({ name, email, phone });
 		res.status(201).json(newUser);
 	} catch (error) {
-		res.status(500).json({ error: 'Error creating user' });
+		next(error);
 	}
 };
 
 // Actualizar un usuario existente
-const updateUser = async (req, res) => {
+const updateUser = async (req, res, next) => {
 	const { id } = req.params;
 	const { name, email, phone } = req.body;
 	try {
@@ -37,12 +37,12 @@ const updateUser = async (req, res) => {
 			res.status(404).json({ error: 'User not found' });
 		}
 	} catch (error) {
-		res.status(500).json({ error: 'Error updating user' });
+		next(error);
 	}
 };
 
 // Eliminar un usuario
-const deleteUser = async (req, res) => {
+const deleteUser = async (req, res, next) => {
 	const { id } = req.params;
 	try {
 		const user = await User.findByPk(id);
@@ -53,7 +53,7 @@ const deleteUser = async (req, res) => {
 			res.status(404).json({ error: 'User not found' });
 		}
 	} catch (error) {
-		res.status(500).json({ error: 'Error deleting user' });
+		next(error);
 	}
 };
 

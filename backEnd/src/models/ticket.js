@@ -4,6 +4,12 @@ module.exports = (sequelize) => {
     const Ticket = sequelize.define(
 		'Ticket',
 		{
+			id: {
+				type: DataTypes.UUID,
+				defaultValue: DataTypes.UUIDV4,
+				primaryKey: true,
+				unique: true,
+			},
 			number: {
 				type: DataTypes.STRING,
 				allowNull: false,
