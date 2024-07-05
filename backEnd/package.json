@@ -2,17 +2,17 @@
 	"name": "sorteo_play",
 	"version": "1.0.0",
 	"description": "",
-	"main": "backend/index.js",
+	"main": "index.js",
 	"scripts": {
-		"start": "node backend/index.js",
-		"dev": "nodemon backend/index.js",
-		"lint": "eslint backend --ext .js",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"start": "node index.js",
+		"dev": "nodemon index.js",
+		"lint": "eslint src --ext .js"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"cookie-parser": "^1.4.6",
 		"cors": "^2.8.5",
 		"dotenv": "^16.4.5",
 		"express": "^4.19.2",
