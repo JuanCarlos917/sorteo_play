@@ -1,11 +1,12 @@
 const express = require('express');
+const userRoutes = require('./userRoutes');
+const ticketRoutes = require('./ticketRoutes');
+const transactionRoutes = require('./transactionRoutes');
 
 const router = express.Router();
 
-// Define tus rutas aquí
-router.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+router.use('/users', userRoutes);
+router.use('/tickets', ticketRoutes);
+router.use('/transactions', transactionRoutes);
 
-// Exporta el router
 module.exports = router;
