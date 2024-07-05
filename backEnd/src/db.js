@@ -20,7 +20,7 @@ const sequelize = new Sequelize(
     dialectOptions: isProduction
       ? {
         ssl: {
-          require: true,
+           require: true,
           rejectUnauthorized: false, // Esto es necesario si estás usando un certificado autofirmado; para un certificado válido, deberías usar 'true'
         },
       }
