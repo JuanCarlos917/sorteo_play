@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-    const Ticket = sequelize.define(
+	const Ticket = sequelize.define(
 		'Ticket',
 		{
 			id: {
@@ -28,13 +28,17 @@ module.exports = (sequelize) => {
 				type: DataTypes.STRING,
 				allowNull: true,
 			},
+			buyerEmail: {
+				type: DataTypes.STRING,
+				allowNull: true,
+			},
 		},
 		{
 			timestamps: false,
 		},
 	);
-    return Ticket;
-}
+	return Ticket;
+};
 
 // Descripción del Modelo Ticket
 

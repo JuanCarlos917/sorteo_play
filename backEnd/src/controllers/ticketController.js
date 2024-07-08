@@ -10,31 +10,47 @@ const getAllTickets = async (req, res) => {
 	}
 };
 
-// Crear boletos en un rango especificado
+// Crear boletos en un rango especificado o un boleto individual
 const createTickets = async (req, res) => {
-	const { start, end } = req.body;
-	try {
-		const tickets = [];
-		for (let i = start; i <= end; i++) {
-			const number = String(i).padStart(3, '0');
-			tickets.push({ number });
-		}
-		await Ticket.bulkCreate(tickets);
-		res.status(201).json({ message: 'Tickets created successfully' });
-	} catch (error) {
-		res.status(500).json({ error: 'Error creating tickets' });
-	}
+    const { start, end, number } = req.body;
+
+    try {
+        if (start !== undefined && end !== undefined) {
+            // Crear boletos en el rango especificado
+            if (start > end) {
+                return res.status(400).json({ error: 'Start value cannot be greater than end value' });
+            }
+
+            const tickets = [];
+            for (let i = start; i <= end; i++) {
+                const ticketNumber = String(i).padStart(3, '0');
+                tickets.push({ number: ticketNumber });
+            }
+            await Ticket.bulkCreate(tickets);
+            res.status(201).json({ message: 'Tickets created successfully' });
+        } else if (number !== undefined) {
+            // Crear un boleto individual
+            const ticketNumber = String(number).padStart(3, '0');
+            await Ticket.create({ number: ticketNumber });
+            res.status(201).json({ message: 'Ticket created successfully' });
+        } else {
+            return res.status(400).json({ error: 'Either start and end or number must be provided' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Error creating tickets' });
+    }
 };
 
 // Actualizar un boleto
 const updateTicket = async (req, res) => {
 	const { id } = req.params;
-	const { buyerName, buyerContact } = req.body;
+	const { buyerName, buyerContact, buyerEmail } = req.body;
 	try {
 		const ticket = await Ticket.findByPk(id);
 		if (ticket) {
 			ticket.buyerName = buyerName;
 			ticket.buyerContact = buyerContact;
+            ticket.buyerEmail = buyerEmail;
 			ticket.status = 'Vendida';
 			await ticket.save();
 			res.status(200).json(ticket);
