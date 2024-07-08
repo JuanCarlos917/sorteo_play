@@ -1,32 +1,27 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-	const Transaction = sequelize.define(
-		'Transaction',
-		{
-			id: {
-				type: DataTypes.UUID,
-				defaultValue: DataTypes.UUIDV4,
-				primaryKey: true,
-				unique: true,
-			},
-			user_id: {
-				type: DataTypes.INTEGER,
-				allowNull: false,
-			},
-			ticket_id: {
-				type: DataTypes.INTEGER,
-				allowNull: false,
-			},
-			transaction_type: {
-				type: DataTypes.ENUM('purchase', 'cancellation', 'change'),
-				allowNull: false,
-			},
+	const Transaction = sequelize.define('Transaction', {
+		id: {
+			type: DataTypes.UUID,
+			defaultValue: DataTypes.UUIDV4,
+			primaryKey: true,
+			unique: true,
 		},
-		{
-			timestamps: false,
+		user_id: {
+			type: DataTypes.UUID,
+			allowNull: false,
 		},
-	);
+		ticket_id: {
+			type: DataTypes.UUID,
+			allowNull: false,
+		},
+		transaction_type: {
+			type: DataTypes.ENUM('purchase', 'cancellation', 'change'),
+			allowNull: false,
+		},
+	});
+
 	return Transaction;
 };
 
