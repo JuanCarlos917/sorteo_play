@@ -5,6 +5,8 @@ import { fetchTickets, deleteTicket } from '../features/tickets/ticketSlice';
 import AddTicketForm from './AddTicketForm';
 import SellTicketForm from './SellTicketForm';
 import ChangeTicketForm from './ChangeTicketForm';
+import UserList from './UserList';
+
 
 const TicketManager = () => {
 	const dispatch = useDispatch();
@@ -50,6 +52,7 @@ const TicketManager = () => {
 			<AddTicketForm />
 			<SellTicketForm />
 			<ChangeTicketForm />
+            <UserList />
 			{content}
 		</div>
 	);
