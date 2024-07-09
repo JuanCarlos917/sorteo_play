@@ -45,12 +45,21 @@ const createTickets = async (req, res) => {
 const updateTicket = async (req, res) => {
 	const { id } = req.params;
 	const { buyerName, buyerContact, buyerEmail } = req.body;
+
+	if (!buyerName || !buyerContact || !buyerEmail) {
+		return res
+			.status(400)
+			.json({
+				error: 'All buyer details must be provided to mark as sold',
+			});
+	}
+
 	try {
 		const ticket = await Ticket.findByPk(id);
 		if (ticket) {
 			ticket.buyerName = buyerName;
 			ticket.buyerContact = buyerContact;
-            ticket.buyerEmail = buyerEmail;
+			ticket.buyerEmail = buyerEmail;
 			ticket.status = 'Vendida';
 			await ticket.save();
 			res.status(200).json(ticket);
@@ -59,6 +68,56 @@ const updateTicket = async (req, res) => {
 		}
 	} catch (error) {
 		res.status(500).json({ error: 'Error updating ticket' });
+	}
+};
+
+// Change a ticket
+const changeTicket = async (req, res) => {
+	const { currentNumber, newNumber, buyerName, buyerContact, buyerEmail } = req.body;
+
+	try {
+		const currentTicket = await Ticket.findOne({ where: { number: currentNumber } });
+		const newTicket = await Ticket.findOne({ where: { number: newNumber } });
+
+		if (!currentTicket || currentTicket.status !== 'Vendida') {
+			return res.status(400).json({ error: 'Current ticket is not sold or does not exist' });
+		}
+
+		if (!newTicket || newTicket.status !== 'Disponible') {
+			return res.status(400).json({ error: 'New ticket is not available or does not exist' });
+		}
+
+		if (
+			currentTicket.buyerName !== buyerName ||
+			currentTicket.buyerContact !== buyerContact ||
+			currentTicket.buyerEmail !== buyerEmail
+		) {
+			return res.status(400).json({ error: 'Buyer details do not match' });
+		}
+
+		// Update the tickets
+		await currentTicket.update({
+			status: 'Disponible',
+			buyerName: null,
+			buyerContact: null,
+			buyerEmail: null,
+		});
+
+		await newTicket.update({
+			status: 'Vendida',
+			buyerName,
+			buyerContact,
+			buyerEmail,
+		});
+
+		res.status(200).json({
+			message: 'Ticket changed successfully',
+			updatedCurrentTicket: currentTicket,
+			updatedNewTicket: newTicket,
+		});
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: 'Error changing ticket' });
 	}
 };
 
@@ -83,4 +142,5 @@ module.exports = {
 	createTickets,
 	updateTicket,
 	deleteTicket,
+    changeTicket
 };
