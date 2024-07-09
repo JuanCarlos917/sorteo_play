@@ -237,7 +237,7 @@ const forgotPassword = async (req, res) => {
 </head>
 <body>
 <div class="container">
-    <a href="#" style="font-size:1.6em; font-weight:500; color: #202124;">My Portfolio</a>
+    <a href="#" style="font-size:1.6em; font-weight:500; color: #202124;">Sorteo Play</a>
     <hr style="border:none;border-top:1px solid #eee;margin-top: 16px;" />
     <p style="font-size:1.1em; color: #202124;">Hola ${admin.email},</p>
     <p style="color: #5f6368;">Para restablecer la contraseña de tu cuenta, haz clic en el siguiente enlace o pégalo en tu navegador:</p>
@@ -249,7 +249,7 @@ const forgotPassword = async (req, res) => {
     <p style="font-size:0.9em; color: #5f6368;">Saludos,<br />Portfolio</p>
     <hr style="border:none;border-top:1px solid #eee;margin-top: 24px;" />
     <div style="padding:8px 0;color:#5f6368;font-size:0.8em;line-height:1.2;">
-      <p>My Portfolio</p>
+      <p>Admin: Juan Carlos Gomez</p>
       <p>Redes sociales</p>
     </div>
 </div>
