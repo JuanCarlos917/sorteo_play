@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const appRoutes = require('./routes/index');
+const authRoutes = require('./routes/adminRoutes.js');
 require('dotenv').config();
 require('./db.js');
 
@@ -27,6 +28,9 @@ server.use(bodyParser.urlencoded({ extended: true }));
 
 // Usar las rutas definidas en appRoutes
 server.use('/api', appRoutes);
+server.use('/auth', authRoutes);
+
+
 
 // Middleware de error
 server.use((err, req, res, next) => {
