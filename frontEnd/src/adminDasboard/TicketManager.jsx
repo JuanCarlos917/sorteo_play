@@ -3,8 +3,6 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTickets, deleteTicket } from '../features/tickets/ticketSlice';
 import AddTicketForm from './AddTicketForm';
-// import SellTicketForm from './SellTicketForm';
-// import ChangeTicketForm from './ChangeTicketForm';
 import UserList from './UserList';
 import CreateTransaction from './CreateTransaction';
 import TransactionList from './TransactionList';
@@ -53,8 +51,6 @@ const TicketManager = () => {
 	return (
 		<div>
 			<AddTicketForm />
-			{/* <SellTicketForm /> */}
-			{/* <ChangeTicketForm /> */}
             <CreateTransaction/>
             <TransactionList/>
             <UserList />
