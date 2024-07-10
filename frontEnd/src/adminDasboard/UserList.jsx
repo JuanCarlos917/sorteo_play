@@ -37,9 +37,10 @@ const UserList = () => {
 	} else if (status === 'succeeded') {
 		content = (
 			<ul>
+				<h2>Buyers</h2>
 				{users.map((user) => (
 					<li key={user.id}>
-						{user.name} - {user.email} - {user.phone}
+						{user.name} - {user.email} - {user.phone} -{user.id}
 						<button onClick={() => handleUpdate(user.id)}>
 							Edit
 						</button>

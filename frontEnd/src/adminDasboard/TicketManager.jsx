@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchTickets, deleteTicket } from '../features/tickets/ticketSlice';
 import AddTicketForm from './AddTicketForm';
 import SellTicketForm from './SellTicketForm';
-import ChangeTicketForm from './ChangeTicketForm';
+// import ChangeTicketForm from './ChangeTicketForm';
 import UserList from './UserList';
+import CreateTransaction from './CreateTransaction';
+import TransactionList from './TransactionList';
 
 
 const TicketManager = () => {
@@ -25,13 +27,14 @@ const TicketManager = () => {
 	} else if (status === 'succeeded') {
 		content = (
 			<div>
+				<h2>Ticket list</h2>
 				<ul>
 					{Array.isArray(tickets) &&
 						tickets.map((ticket, index) => (
 							<li key={index}>
 								{ticket.number} - {ticket.status} -{' '}
 								{ticket.buyerName} - {ticket.buyerContact} -{' '}
-								{ticket.buyerEmail}
+								{ticket.buyerEmail} - {ticket.id}
 								<button
 									onClick={() =>
 										dispatch(deleteTicket(ticket.id))
@@ -51,7 +54,9 @@ const TicketManager = () => {
 		<div>
 			<AddTicketForm />
 			<SellTicketForm />
-			<ChangeTicketForm />
+			{/* <ChangeTicketForm /> */}
+            <CreateTransaction/>
+            <TransactionList/>
             <UserList />
 			{content}
 		</div>
