@@ -1,4 +1,3 @@
-// src/components/CreateTransaction.jsx
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsers } from '../features/users/userSlice';
@@ -24,6 +23,8 @@ const CreateTransaction = () => {
 	const [oldTicketNumber, setOldTicketNumber] = useState('');
 	const [oldTicketId, setOldTicketId] = useState('');
 	const [newTicketId, setNewTicketId] = useState('');
+	const [message, setMessage] = useState('');
+	const [error, setError] = useState('');
 
 	useEffect(() => {
 		dispatch(fetchUsers());
@@ -36,7 +37,8 @@ const CreateTransaction = () => {
 			const userTransactions = transactions.filter(
 				(transaction) =>
 					transaction.user_id === userId &&
-					transaction.transaction_type === 'purchase',
+					(transaction.transaction_type === 'purchase' ||
+						transaction.transaction_type === 'change'),
 			);
 			if (userTransactions.length > 0) {
 				const lastTransaction =
@@ -46,41 +48,52 @@ const CreateTransaction = () => {
 				);
 				if (ticket) {
 					setOldTicketNumber(ticket.number);
-					setOldTicketId(ticket.id); // Guardar el ID del ticket antiguo
+					setOldTicketId(ticket.id);
 				}
 			}
 		}
 	}, [transactionType, userId, transactions, tickets]);
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		if (transactionType === 'purchase') {
-			dispatch(
-				createTransaction({
-					user_id: userId,
-					ticket_id: ticketId,
-					transaction_type: transactionType,
-				}),
-			);
-		} else if (transactionType === 'cancellation') {
-			const transaction = transactions.find(
-				(transaction) =>
-					transaction.ticket_id === ticketId &&
-					transaction.transaction_type === 'purchase',
-			);
-			if (transaction) {
-				dispatch(cancelTransaction(transaction.id));
-			} else {
-				alert('No purchase transaction found for this ticket.');
+		setMessage('');
+		setError('');
+		try {
+			if (transactionType === 'purchase') {
+				await dispatch(
+					createTransaction({
+						user_id: userId,
+						ticket_id: ticketId,
+						transaction_type: transactionType,
+					}),
+				).unwrap();
+				setMessage('Purchase transaction created successfully.');
+			} else if (transactionType === 'cancellation') {
+				const transaction = transactions.find(
+					(transaction) =>
+						transaction.ticket_id === ticketId &&
+						transaction.transaction_type === 'purchase',
+				);
+				if (transaction) {
+					await dispatch(cancelTransaction(transaction.id)).unwrap();
+					setMessage(
+						'Cancellation transaction created successfully.',
+					);
+				} else {
+					setError('No purchase transaction found for this ticket.');
+				}
+			} else if (transactionType === 'change') {
+				await dispatch(
+					changeTicket({
+						user_id: userId,
+						old_ticket_id: oldTicketId,
+						new_ticket_id: newTicketId,
+					}),
+				).unwrap();
+				setMessage('Change transaction created successfully.');
 			}
-		} else if (transactionType === 'change') {
-			dispatch(
-				changeTicket({
-					user_id: userId,
-					old_ticket_id: oldTicketId,
-					new_ticket_id: newTicketId,
-				}),
-			);
+		} catch (err) {
+			setError('An error occurred while creating the transaction.');
 		}
 		setUserId('');
 		setTicketId('');
@@ -181,6 +194,8 @@ const CreateTransaction = () => {
 				</>
 			)}
 			<button type='submit'>Submit</button>
+			{message && <p style={{ color: 'green' }}>{message}</p>}
+			{error && <p style={{ color: 'red' }}>{error}</p>}
 		</form>
 	);
 };
