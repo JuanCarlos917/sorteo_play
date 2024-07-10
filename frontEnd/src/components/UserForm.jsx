@@ -1,24 +1,57 @@
-// src/components/UserForm.jsx
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createUser } from '../features/users/userSlice';
+import { updateTicket } from '../features/tickets/ticketSlice';
+import AvailableTickets from './AvailableTickets';
 
 const UserForm = () => {
 	const dispatch = useDispatch();
+	const [selectedTicket, setSelectedTicket] = useState('');
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [phone, setPhone] = useState('');
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		dispatch(createUser({ name, email, phone }));
-		setName('');
-		setEmail('');
-		setPhone('');
+
+		// Create user
+		const resultAction = await dispatch(createUser({ name, email, phone }));
+
+		if (createUser.fulfilled.match(resultAction)) {
+			// Update ticket
+			dispatch(
+				updateTicket({
+					id: selectedTicket,
+					ticket: {
+						status: 'Vendida',
+						buyerName: name,
+						buyerContact: phone,
+						buyerEmail: email,
+					},
+				}),
+			);
+
+			// Reset form fields
+			setName('');
+			setEmail('');
+			setPhone('');
+			setSelectedTicket('');
+		}
+	};
+
+	const handleTicketChange = (e) => {
+		setSelectedTicket(e.target.value);
 	};
 
 	return (
 		<form onSubmit={handleSubmit}>
+			<h2>Select Ticket</h2>
+			<AvailableTickets
+				onTicketChange={handleTicketChange}
+				selectedTicket={selectedTicket}
+			/>
+
+			<h2>Client Information</h2>
 			<div>
 				<label>Name:</label>
 				<input
@@ -43,7 +76,7 @@ const UserForm = () => {
 					onChange={(e) => setPhone(e.target.value)}
 				/>
 			</div>
-			<button type='submit'>Add User</button>
+			<button type='submit'>Submit</button>
 		</form>
 	);
 };
