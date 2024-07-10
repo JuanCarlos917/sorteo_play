@@ -21,6 +21,7 @@ const CreateTransaction = () => {
 	const [userId, setUserId] = useState('');
 	const [ticketId, setTicketId] = useState('');
 	const [transactionType, setTransactionType] = useState('purchase');
+	const [oldTicketNumber, setOldTicketNumber] = useState('');
 	const [oldTicketId, setOldTicketId] = useState('');
 	const [newTicketId, setNewTicketId] = useState('');
 
@@ -29,6 +30,27 @@ const CreateTransaction = () => {
 		dispatch(fetchTickets());
 		dispatch(fetchTransactions());
 	}, [dispatch]);
+
+	useEffect(() => {
+		if (transactionType === 'change' && userId) {
+			const userTransactions = transactions.filter(
+				(transaction) =>
+					transaction.user_id === userId &&
+					transaction.transaction_type === 'purchase',
+			);
+			if (userTransactions.length > 0) {
+				const lastTransaction =
+					userTransactions[userTransactions.length - 1];
+				const ticket = tickets.find(
+					(ticket) => ticket.id === lastTransaction.ticket_id,
+				);
+				if (ticket) {
+					setOldTicketNumber(ticket.number);
+					setOldTicketId(ticket.id); // Guardar el ID del ticket antiguo
+				}
+			}
+		}
+	}, [transactionType, userId, transactions, tickets]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -63,6 +85,7 @@ const CreateTransaction = () => {
 		setUserId('');
 		setTicketId('');
 		setTransactionType('purchase');
+		setOldTicketNumber('');
 		setOldTicketId('');
 		setNewTicketId('');
 	};
@@ -135,19 +158,8 @@ const CreateTransaction = () => {
 			{transactionType === 'change' && (
 				<>
 					<div>
-						<label>Old Ticket ID:</label>
-						<select
-							value={oldTicketId}
-							onChange={(e) => setOldTicketId(e.target.value)}>
-							<option value=''>Select Old Ticket</option>
-							{tickets
-								.filter((ticket) => ticket.status === 'Vendida')
-								.map((ticket) => (
-									<option key={ticket.id} value={ticket.id}>
-										{ticket.number}
-									</option>
-								))}
-						</select>
+						<label>Old Ticket Number:</label>
+						<input type='text' value={oldTicketNumber} disabled />
 					</div>
 					<div>
 						<label>New Ticket ID:</label>
