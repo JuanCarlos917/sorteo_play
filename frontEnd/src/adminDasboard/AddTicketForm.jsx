@@ -28,6 +28,7 @@ const AddTicketForm = () => {
 
 	return (
 		<form onSubmit={handleSubmit}>
+            <h2>Tickets</h2>
 			<div>
 				<label>Start Number:</label>
 				<input
