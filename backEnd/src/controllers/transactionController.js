@@ -1,4 +1,5 @@
-const { Transaction, Ticket } = require('../index');
+// controllers/transactionController.js
+const { Transaction, Ticket, User } = require('../index');
 
 // Obtener todas las transacciones
 const getAllTransactions = async (req, res) => {
@@ -12,32 +13,35 @@ const getAllTransactions = async (req, res) => {
 
 // Crear una nueva transacción (compra)
 const createTransaction = async (req, res) => {
-	const { user_id, ticket_id, transaction_type } = req.body;
-	try {
-		if (transaction_type === 'purchase') {
-			const ticket = await Ticket.findByPk(ticket_id);
-			if (ticket && ticket.status === 'Disponible') {
-				ticket.status = 'Vendida';
-				await ticket.save();
-				const newTransaction = await Transaction.create({
-					user_id,
-					ticket_id,
-					transaction_type,
-				});
-				res.status(201).json(newTransaction);
-			} else {
-				res.status(400).json({
-					error: 'Ticket not available for purchase',
-				});
-			}
-		} else {
-			res.status(400).json({
-				error: 'Invalid transaction type for this endpoint',
-			});
-		}
-	} catch (error) {
-		res.status(500).json({ error: 'Error creating transaction' });
-	}
+    const { user_id, ticket_id, transaction_type } = req.body;
+    try {
+        if (transaction_type === 'purchase') {
+            const ticket = await Ticket.findByPk(ticket_id);
+            const user = await User.findByPk(user_id);
+            if (ticket && ticket.status === 'Vendida' && user) {
+                ticket.buyerName = user.name;
+                ticket.buyerContact = user.phone;
+                ticket.buyerEmail = user.email;
+                await ticket.save();
+                const newTransaction = await Transaction.create({
+                    user_id,
+                    ticket_id,
+                    transaction_type,
+                });
+                res.status(201).json(newTransaction);
+            } else {
+                res.status(400).json({
+                    error: 'Ticket not available for purchase or user not found',
+                });
+            }
+        } else {
+            res.status(400).json({
+                error: 'Invalid transaction type for this endpoint',
+            });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Error creating transaction' });
+    }
 };
 
 // Cancelar una compra de ticket
