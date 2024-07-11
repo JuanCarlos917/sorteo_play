@@ -24,16 +24,16 @@ const TransactionList = () => {
 			<table>
 				<thead>
 					<tr>
-						<th>User ID</th>
+						{/* <th>User ID</th> */}
 						<th>Ticket ID</th>
 						<th>Transaction Type</th>
 					</tr>
 				</thead>
 				<tbody>
-					{transactions.map((transaction,index) => (
+					{transactions.map((transaction, index) => (
 						<tr key={index}>
-							<td>{transaction.id}</td>
-							<td>{transaction.user_id}</td>
+							{/* <td>{transaction.id}</td>
+							<td>{transaction.user_id}</td> */}
 							<td>{transaction.ticket_id}</td>
 							<td>{transaction.transaction_type}</td>
 						</tr>
