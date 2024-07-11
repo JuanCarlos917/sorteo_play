@@ -1,3 +1,4 @@
+// src/components/CreateTransaction.jsx
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsers } from '../features/users/userSlice';
@@ -23,8 +24,8 @@ const CreateTransaction = () => {
 	const [oldTicketNumber, setOldTicketNumber] = useState('');
 	const [oldTicketId, setOldTicketId] = useState('');
 	const [newTicketId, setNewTicketId] = useState('');
+	const [cancelTransactionId, setCancelTransactionId] = useState(null);
 	const [message, setMessage] = useState('');
-	const [error, setError] = useState('');
 
 	useEffect(() => {
 		dispatch(fetchUsers());
@@ -37,8 +38,7 @@ const CreateTransaction = () => {
 			const userTransactions = transactions.filter(
 				(transaction) =>
 					transaction.user_id === userId &&
-					(transaction.transaction_type === 'purchase' ||
-						transaction.transaction_type === 'change'),
+					transaction.transaction_type === 'purchase',
 			);
 			if (userTransactions.length > 0) {
 				const lastTransaction =
@@ -51,13 +51,32 @@ const CreateTransaction = () => {
 					setOldTicketId(ticket.id);
 				}
 			}
+		} else if (transactionType === 'cancellation' && ticketId) {
+			const transaction = transactions.find(
+				(transaction) =>
+					transaction.ticket_id === ticketId &&
+					transaction.transaction_type === 'purchase',
+			);
+			if (transaction) {
+				setCancelTransactionId(transaction.id);
+				const ticket = tickets.find(
+					(ticket) => ticket.id === transaction.ticket_id,
+				);
+				if (ticket) {
+					setOldTicketNumber(ticket.number);
+				}
+			} else {
+				setCancelTransactionId(null);
+				setOldTicketNumber('');
+			}
+		} else {
+			setCancelTransactionId(null);
+			setOldTicketNumber('');
 		}
-	}, [transactionType, userId, transactions, tickets]);
+	}, [transactionType, userId, transactions, tickets, ticketId]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		setMessage('');
-		setError('');
 		try {
 			if (transactionType === 'purchase') {
 				await dispatch(
@@ -67,20 +86,13 @@ const CreateTransaction = () => {
 						transaction_type: transactionType,
 					}),
 				).unwrap();
-				setMessage('Purchase transaction created successfully.');
 			} else if (transactionType === 'cancellation') {
-				const transaction = transactions.find(
-					(transaction) =>
-						transaction.ticket_id === ticketId &&
-						transaction.transaction_type === 'purchase',
-				);
-				if (transaction) {
-					await dispatch(cancelTransaction(transaction.id)).unwrap();
-					setMessage(
-						'Cancellation transaction created successfully.',
-					);
+				if (cancelTransactionId) {
+					await dispatch(
+						cancelTransaction(cancelTransactionId),
+					).unwrap();
 				} else {
-					setError('No purchase transaction found for this ticket.');
+					alert('No purchase transaction found for this ticket.');
 				}
 			} else if (transactionType === 'change') {
 				await dispatch(
@@ -90,10 +102,10 @@ const CreateTransaction = () => {
 						new_ticket_id: newTicketId,
 					}),
 				).unwrap();
-				setMessage('Change transaction created successfully.');
 			}
-		} catch (err) {
-			setError('An error occurred while creating the transaction.');
+			setMessage('Transaction completed successfully.');
+		} catch (error) {
+			setMessage(`Error: ${error.message}`);
 		}
 		setUserId('');
 		setTicketId('');
@@ -166,6 +178,16 @@ const CreateTransaction = () => {
 								</option>
 							))}
 					</select>
+					{cancelTransactionId && (
+						<div>
+							<label>Ticket Number:</label>
+							<input
+								type='text'
+								value={oldTicketNumber}
+								disabled
+							/>
+						</div>
+					)}
 				</div>
 			)}
 			{transactionType === 'change' && (
@@ -194,8 +216,7 @@ const CreateTransaction = () => {
 				</>
 			)}
 			<button type='submit'>Submit</button>
-			{message && <p style={{ color: 'green' }}>{message}</p>}
-			{error && <p style={{ color: 'red' }}>{error}</p>}
+			{message && <div>{message}</div>}
 		</form>
 	);
 };
