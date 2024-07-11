@@ -53,6 +53,9 @@ const cancelTransaction = async (req, res) => {
 			const ticket = await Ticket.findByPk(transaction.ticket_id);
 			if (ticket) {
 				ticket.status = 'Disponible';
+				ticket.buyerName = null;
+				ticket.buyerContact = null;
+				ticket.buyerEmail = null;
 				await ticket.save();
 				const newTransaction = await Transaction.create({
 					user_id: transaction.user_id,
