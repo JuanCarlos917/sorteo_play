@@ -11,6 +11,7 @@ import {
 
 import TicketManager from './adminDasboard/TicketManager';
 import UserForm from './components/UserForm';
+import Instructions from './components/Instructions';
 function App() {
 	const router = createBrowserRouter(
 		createRoutesFromElements(
@@ -19,8 +20,6 @@ function App() {
 					path='/dashboard'
 					element={
 						<TicketManager />
-						// <ProtectedRoute>
-						// 	<TicketManager />
 						// </ProtectedRoute>
 					}
 				/>
@@ -41,6 +40,7 @@ const Root = () => {
 		return (
 			<>
 				<UserForm />
+                <Instructions/>
 			</>
 		);
 	} else {

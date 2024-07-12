@@ -3,6 +3,16 @@ import { useDispatch } from 'react-redux';
 import { createUser } from '../features/users/userSlice';
 import { updateTicket } from '../features/tickets/ticketSlice';
 import AvailableTickets from './AvailableTickets';
+import {
+	validateName,
+	validateEmail,
+	validatePhone,
+} from '../utils/validation';
+import { TextField, Button, Typography, Box, Container } from '@mui/material';
+import ps5 from '../assets/icon-ps5.svg';
+import cod from '../assets/icons8-call-of-duty-mobile.svg';
+import fifa24 from '../assets/EA_Sports_FC_24_logo.svg';
+import logoPlayStation from '../assets/icons8-play-station.svg';
 
 const UserForm = () => {
 	const dispatch = useDispatch();
@@ -10,15 +20,24 @@ const UserForm = () => {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [phone, setPhone] = useState('');
+	const [error, setError] = useState({});
+	const [message, setMessage] = useState('');
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		// Create user
+		const nameError = validateName(name);
+		const emailError = validateEmail(email);
+		const phoneError = validatePhone(phone);
+
+		if (nameError || emailError || phoneError) {
+			setError({ name: nameError, email: emailError, phone: phoneError });
+			return;
+		}
+
 		const resultAction = await dispatch(createUser({ name, email, phone }));
 
 		if (createUser.fulfilled.match(resultAction)) {
-			// Update ticket
 			dispatch(
 				updateTicket({
 					id: selectedTicket,
@@ -31,11 +50,13 @@ const UserForm = () => {
 				}),
 			);
 
-			// Reset form fields
 			setName('');
 			setEmail('');
 			setPhone('');
 			setSelectedTicket('');
+			setMessage(
+				'Gracias por su compra. El boleto se ha adquirido correctamente.',
+			);
 		}
 	};
 
@@ -44,40 +65,168 @@ const UserForm = () => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
-			<h2>Select Ticket</h2>
-			<AvailableTickets
-				onTicketChange={handleTicketChange}
-				selectedTicket={selectedTicket}
-			/>
-
-			<h2>Client Information</h2>
-			<div>
-				<label>Name:</label>
-				<input
-					type='text'
+		<Container
+			maxWidth='sm'
+			className='flex min-h-full flex-col justify-center px-6 py-12 lg:px-8'>
+			<div className='sm:mx-auto sm:w-full sm:max-w-sm'>
+				<div className='flex justify-center items-center space-x-4'>
+					<img
+						src={logoPlayStation}
+						alt='PlayStation Logo'
+						style={{ height: '50px', width: 'auto' }}
+					/>
+					<img
+						src={ps5}
+						alt='PS5'
+						style={{ height: '100px', width: 'auto' }}
+					/>
+				</div>
+				<Typography
+					component='h2'
+					variant='h5'
+					className='mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-black'>
+					Sorteo Play Station 5
+				</Typography>
+				<Box display='flex' justifyContent='center' mt={2} className='space-x-4'>
+					<img
+						className='mx-2'
+						src={cod}
+						alt='COD'
+						style={{ height: '40px', width: 'auto' }}
+					/>
+					<img
+						className='mx-2'
+						src={fifa24}
+						alt='FIFA 24'
+						style={{ height: '40px', width: 'auto' }}
+					/>
+				</Box>
+			</div>
+			<Box
+				component='form'
+				onSubmit={handleSubmit}
+				className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
+				<AvailableTickets
+					onTicketChange={handleTicketChange}
+					selectedTicket={selectedTicket}
+				/>
+				<TextField
+					label='Nombre y Apellido'
 					value={name}
 					onChange={(e) => setName(e.target.value)}
+					fullWidth
+					margin='normal'
+					error={!!error.name}
+					helperText={error.name}
+					required
+					sx={{
+						input: { color: '#263238' },
+						'& .MuiInputLabel-root.Mui-focused': {
+							color: '#263238',
+						},
+						label: { color: '#616161' },
+						'& .MuiOutlinedInput-root': {
+							'& fieldset': {
+								borderColor: '#e0e0e0',
+							},
+							'&:hover fieldset': {
+								borderColor: '#c0c0c0',
+							},
+							'&.Mui-focused fieldset': {
+								borderColor: '#bdbdbd',
+							},
+						},
+					}}
 				/>
-			</div>
-			<div>
-				<label>Email:</label>
-				<input
-					type='email'
+				<TextField
+					label='Email'
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}
+					fullWidth
+					margin='normal'
+					error={!!error.email}
+					helperText={error.email}
+					required
+					sx={{
+						input: { color: '#263238' },
+						'& .MuiInputLabel-root.Mui-focused': {
+							color: '#263238',
+						},
+						label: { color: '#616161' },
+						'& .MuiOutlinedInput-root': {
+							'& fieldset': {
+								borderColor: '#e0e0e0',
+							},
+							'&:hover fieldset': {
+								borderColor: '#c0c0c0',
+							},
+							'&.Mui-focused fieldset': {
+								borderColor: '#bdbdbd',
+							},
+						},
+					}}
 				/>
-			</div>
-			<div>
-				<label>Phone:</label>
-				<input
-					type='text'
+				<TextField
+					label='Celular'
 					value={phone}
 					onChange={(e) => setPhone(e.target.value)}
+					fullWidth
+					margin='normal'
+					error={!!error.phone}
+					helperText={error.phone}
+					required
+					sx={{
+						input: { color: '#263238' },
+						'& .MuiInputLabel-root.Mui-focused': {
+							color: '#263238',
+						},
+						label: { color: '#616161' },
+						'& .MuiOutlinedInput-root': {
+							'& fieldset': {
+								borderColor: '#e0e0e0',
+							},
+							'&:hover fieldset': {
+								borderColor: '#c0c0c0',
+							},
+							'&.Mui-focused fieldset': {
+								borderColor: '#bdbdbd',
+							},
+						},
+					}}
 				/>
-			</div>
-			<button type='submit'>Submit</button>
-		</form>
+				<Button
+					type='submit'
+					variant='contained'
+					fullWidth
+					sx={{
+						mt: 2,
+						bgcolor: 'transparent',
+						background:
+							'linear-gradient(to right, #e0e0e0, transparent)',
+						color: '#212121',
+						borderRadius: '4px',
+						boxShadow: '0px 5px 9px rgba(0, 0, 0, 1.6)',
+						'&:hover': {
+							background:
+								'linear-gradient(to right, #ff3d00, transparent)',
+						},
+						'&:focus-visible': {
+							outline: '2px solid #3b82f6',
+							outlineOffset: '2px',
+						},
+					}}>
+					Enviar
+				</Button>
+				{message && (
+					<Typography
+						variant='body1'
+						color='success.main'
+						className='text-center mt-2'>
+						{message}
+					</Typography>
+				)}
+			</Box>
+		</Container>
 	);
 };
 
