@@ -1,3 +1,4 @@
+// src/components/TicketManager.jsx
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTickets, deleteTicket } from '../features/tickets/ticketSlice';
