@@ -28,6 +28,11 @@ const TransactionList = () => {
 							<th
 								scope='col'
 								className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+								User ID
+							</th>
+							<th
+								scope='col'
+								className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
 								Ticket ID
 							</th>
 							<th
@@ -40,6 +45,9 @@ const TransactionList = () => {
 					<tbody className='bg-white divide-y divide-gray-200'>
 						{transactions.map((transaction, index) => (
 							<tr key={index}>
+								<td className='px-6 py-4 whitespace-nowrap'>
+									{transaction.user_id}
+								</td>
 								<td className='px-6 py-4 whitespace-nowrap'>
 									{transaction.ticket_id}
 								</td>
