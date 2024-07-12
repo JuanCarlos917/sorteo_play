@@ -123,7 +123,7 @@ const Instructions = () => {
 					className='text-lg'
 					sx={{ color: '#212121', fontWeight: 'bold' }}>
 					6. Envia tu comprobante de consignación al número
-					3132074757.
+					3132074757 Para participar en el sorteo.
 				</Typography>
 				<Typography
 					variant='body2'
