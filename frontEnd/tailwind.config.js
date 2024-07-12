@@ -11,6 +11,9 @@ export default {
 				grey300: '#e0e0e0',
 				black: '#000000',
 			},
+			fontFamily: {
+				rubik: ['Rubik', 'sans-serif'],
+			},
 		},
 	},
 	plugins: [],

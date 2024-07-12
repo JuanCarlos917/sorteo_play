@@ -4,52 +4,47 @@ import {
 	Route,
 	RouterProvider,
 	Outlet,
-	useMatch,
 } from 'react-router-dom';
-
-// import { ProtectedRoute } from './components/ProtectedRoute';
-
 import TicketManager from './adminDasboard/TicketManager';
 import UserForm from './components/UserForm';
 import Instructions from './components/Instructions';
+import NotFound404 from './components/NotFound404';
+import Footer from './components/Footer';
+
 function App() {
 	const router = createBrowserRouter(
 		createRoutesFromElements(
 			<Route path='/' element={<Root />}>
-				<Route
-					path='/dashboard'
-					element={
-						<TicketManager />
-						// </ProtectedRoute>
-					}
-				/>
-				<Route />
+				<Route index element={<Home />} />
+				<Route path='dashboard' element={<TicketManager />} />
+				<Route path='*' element={<NotFound404 />} />
 			</Route>,
 		),
 	);
+
 	return (
 		<>
 			<RouterProvider router={router} />
+			<Footer />
 		</>
 	);
 }
 
 const Root = () => {
-	const match = useMatch('/dashboard/*');
-	if (!match) {
-		return (
-			<>
-				<UserForm />
-                <Instructions/>
-			</>
-		);
-	} else {
-		return (
-			<>
-				<Outlet />
-			</>
-		);
-	}
+	return (
+		<>
+			<Outlet />
+		</>
+	);
+};
+
+const Home = () => {
+	return (
+		<>
+			<UserForm />
+			<Instructions />
+		</>
+	);
 };
 
 export default App;
