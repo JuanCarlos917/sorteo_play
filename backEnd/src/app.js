@@ -12,8 +12,22 @@ const server = express();
 server.name = 'API';
 
 // Configurar opciones de CORS
+const allowedOrigins = [
+	`${process.env.BASE_URL}`,
+	'https://otra-url-permitida.com',
+];
+
 const corsOptions = {
-	origin: `${process.env.BASE_URL}`,
+	origin: (origin, callback) => {
+		// Allow requests with no origin, like mobile apps or curl requests
+		if (!origin) return callback(null, true);
+		if (allowedOrigins.indexOf(origin) === -1) {
+			const msg =
+				'The CORS policy for this site does not allow access from the specified Origin.';
+			return callback(new Error(msg), false);
+		}
+		return callback(null, true);
+	},
 	credentials: true,
 	methods: 'GET, POST, OPTIONS, PUT, DELETE',
 	allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept',
@@ -29,8 +43,6 @@ server.use(bodyParser.urlencoded({ extended: true }));
 // Usar las rutas definidas en appRoutes
 server.use('/api', appRoutes);
 server.use('/auth', authRoutes);
-
-
 
 // Middleware de error
 server.use((err, req, res, next) => {
