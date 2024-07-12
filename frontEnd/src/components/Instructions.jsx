@@ -37,7 +37,7 @@ const Instructions = () => {
 	return (
 		<Container
 			maxWidth={false}
-			className='p-8 rounded-lg shadow-lg text-gray-300'
+			className='p-8 rounded-lg shadow-lg text-gray-300 font-rubik '
 			sx={{
 				width: '100%',
 				bgcolor: '#cfd8dc',
@@ -69,28 +69,28 @@ const Instructions = () => {
 					component='p'
 					className='text-lg'
 					sx={{ color: '#212121' }}>
-					1. Seleccionar la boleta.
+					1. Seleccionar una boleta.
 				</Typography>
 				<Typography
 					variant='h6'
 					component='p'
 					className='text-lg'
 					sx={{ color: '#212121' }}>
-					2. Diligenciar su nombre y apellido.
+					2. Escribe tu nombre y apellido.
 				</Typography>
 				<Typography
 					variant='h6'
 					component='p'
 					className='text-lg'
 					sx={{ color: '#212121' }}>
-					3. Diligenciar su email.
+					3. Escribe tu email.
 				</Typography>
 				<Typography
 					variant='h6'
 					component='p'
 					className='text-lg'
 					sx={{ color: '#212121' }}>
-					4. Diligenciar su número de teléfono.
+					4. Escribe tu número de teléfono.
 				</Typography>
 				<Typography
 					variant='h6'
@@ -121,8 +121,8 @@ const Instructions = () => {
 					variant='h6'
 					component='p'
 					className='text-lg'
-					sx={{ color: '#212121' }}>
-					6. Envia el comprobante de consignación al número
+					sx={{ color: '#212121', fontWeight: 'bold' }}>
+					6. Envia tu comprobante de consignación al número
 					3132074757.
 				</Typography>
 				<Typography
