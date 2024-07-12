@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createUser } from '../features/users/userSlice';
 import { updateTicket } from '../features/tickets/ticketSlice';
 import AvailableTickets from './AvailableTickets';
@@ -8,7 +8,14 @@ import {
 	validateEmail,
 	validatePhone,
 } from '../utils/validation';
-import { TextField, Button, Typography, Box, Container } from '@mui/material';
+import {
+	TextField,
+	Button,
+	Typography,
+	Box,
+	Container,
+	Alert,
+} from '@mui/material';
 import ps5 from '../assets/icon-ps5.svg';
 import cod from '../assets/icons8-call-of-duty-mobile.svg';
 import fifa24 from '../assets/EA_Sports_FC_24_logo.svg';
@@ -22,6 +29,8 @@ const UserForm = () => {
 	const [phone, setPhone] = useState('');
 	const [error, setError] = useState({});
 	const [message, setMessage] = useState('');
+	const [ticketsAvailable, setTicketsAvailable] = useState(false);
+	const ticketError = useSelector((state) => state.tickets.error);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -87,7 +96,11 @@ const UserForm = () => {
 					className='mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-black'>
 					Sorteo Play Station 5
 				</Typography>
-				<Box display='flex' justifyContent='center' mt={2} className='space-x-4'>
+				<Box
+					display='flex'
+					justifyContent='center'
+					mt={2}
+					className='space-x-4'>
 					<img
 						className='mx-2'
 						src={cod}
@@ -109,6 +122,7 @@ const UserForm = () => {
 				<AvailableTickets
 					onTicketChange={handleTicketChange}
 					selectedTicket={selectedTicket}
+					setTicketsAvailable={setTicketsAvailable} // Asegúrate de pasar la función aquí
 				/>
 				<TextField
 					label='Nombre y Apellido'
@@ -198,6 +212,7 @@ const UserForm = () => {
 					type='submit'
 					variant='contained'
 					fullWidth
+					disabled={!ticketsAvailable} // Deshabilita el botón si no hay boletos disponibles
 					sx={{
 						mt: 2,
 						bgcolor: 'transparent',
@@ -215,15 +230,20 @@ const UserForm = () => {
 							outlineOffset: '2px',
 						},
 					}}>
-					Enviar
+					Registrar
 				</Button>
 				{message && (
 					<Typography
 						variant='body1'
 						color='success.main'
-						className='text-center mt-2'>
+						className='text-center mt-2 pt-6'>
 						{message}
 					</Typography>
+				)}
+				{ticketError && (
+					<Alert severity='error' className='mt-2'>
+						{ticketError}
+					</Alert>
 				)}
 			</Box>
 		</Container>

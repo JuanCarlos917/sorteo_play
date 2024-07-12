@@ -11,7 +11,7 @@ import {
 	Box,
 } from '@mui/material';
 
-const AvailableTickets = ({ onTicketChange, selectedTicket }) => {
+const AvailableTickets = ({ onTicketChange, selectedTicket, setTicketsAvailable }) => {
 	const dispatch = useDispatch();
 	const tickets = useSelector((state) => state.tickets.tickets);
 	const status = useSelector((state) => state.tickets.status);
@@ -24,6 +24,10 @@ const AvailableTickets = ({ onTicketChange, selectedTicket }) => {
 	const availableTickets = tickets.filter(
 		(ticket) => ticket.status === 'Disponible',
 	);
+
+	useEffect(() => {
+		setTicketsAvailable(availableTickets.length > 0);
+	}, [availableTickets, setTicketsAvailable]);
 
 	let content;
 
