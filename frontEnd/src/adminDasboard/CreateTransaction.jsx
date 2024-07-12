@@ -1,4 +1,3 @@
-// src/components/CreateTransaction.jsx
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsers } from '../features/users/userSlice';
@@ -26,7 +25,6 @@ const CreateTransaction = () => {
 	const [newTicketId, setNewTicketId] = useState('');
 	const [cancelTransactionId, setCancelTransactionId] = useState(null);
 	const [message, setMessage] = useState('');
-
 	useEffect(() => {
 		dispatch(fetchUsers());
 		dispatch(fetchTickets());
@@ -74,7 +72,6 @@ const CreateTransaction = () => {
 			setOldTicketNumber('');
 		}
 	}, [transactionType, userId, transactions, tickets, ticketId]);
-
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
@@ -116,108 +113,222 @@ const CreateTransaction = () => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
-			<h2>Create Transaction</h2>
-			<div>
-				<label>User ID:</label>
-				<select
-					value={userId}
-					onChange={(e) => setUserId(e.target.value)}>
-					<option value=''>Select User</option>
-					{users.map((user) => (
-						<option key={user.id} value={user.id}>
-							{user.name} - {user.email} - {user.phone}
-						</option>
-					))}
-				</select>
+		<div className='flex min-h-full flex-col justify-center px-6 py-12 lg:px-8'>
+			<div className='sm:mx-auto sm:w-full sm:max-w-sm'>
+				<h2 className='mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900'>
+					Create Transaction
+				</h2>
 			</div>
-			<div>
-				<label>Transaction Type:</label>
-				<select
-					value={transactionType}
-					onChange={(e) => setTransactionType(e.target.value)}>
-					<option value='purchase'>Purchase</option>
-					<option value='cancellation'>Cancellation</option>
-					<option value='change'>Change</option>
-				</select>
-			</div>
-			{transactionType === 'purchase' && (
-				<div>
-					<label>Ticket ID:</label>
-					<select
-						value={ticketId}
-						onChange={(e) => setTicketId(e.target.value)}>
-						<option value=''>Select Ticket</option>
-						{tickets
-							.filter((ticket) => ticket.status === 'Vendida')
-							.map((ticket) => (
-								<option key={ticket.id} value={ticket.id}>
-									{ticket.number}
-								</option>
-							))}
-					</select>
-				</div>
-			)}
-			{transactionType === 'cancellation' && (
-				<div>
-					<label>Ticket ID:</label>
-					<select
-						value={ticketId}
-						onChange={(e) => setTicketId(e.target.value)}>
-						<option value=''>Select Ticket</option>
-						{transactions
-							.filter(
-								(transaction) =>
-									transaction.transaction_type === 'purchase',
-							)
-							.map((transaction) => (
-								<option
-									key={transaction.id}
-									value={transaction.ticket_id}>
-									{transaction.ticket_id}
-								</option>
-							))}
-					</select>
-					{cancelTransactionId && (
-						<div>
-							<label>Ticket Number:</label>
-							<input
-								type='text'
-								value={oldTicketNumber}
-								disabled
-							/>
-						</div>
-					)}
-				</div>
-			)}
-			{transactionType === 'change' && (
-				<>
+
+			<div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
+				<form className='space-y-6' onSubmit={handleSubmit}>
 					<div>
-						<label>Old Ticket Number:</label>
-						<input type='text' value={oldTicketNumber} disabled />
-					</div>
-					<div>
-						<label>New Ticket ID:</label>
-						<select
-							value={newTicketId}
-							onChange={(e) => setNewTicketId(e.target.value)}>
-							<option value=''>Select New Ticket</option>
-							{tickets
-								.filter(
-									(ticket) => ticket.status === 'Disponible',
-								)
-								.map((ticket) => (
-									<option key={ticket.id} value={ticket.id}>
-										{ticket.number}
+						<label
+							htmlFor='userId'
+							className='block text-sm font-medium leading-6 text-gray-900'>
+							User ID
+						</label>
+						<div className='mt-2'>
+							<select
+								id='userId'
+								name='userId'
+								value={userId}
+								onChange={(e) => setUserId(e.target.value)}
+								required
+								className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'>
+								<option value=''>Select User</option>
+								{users.map((user) => (
+									<option key={user.id} value={user.id}>
+										{user.name} - {user.email} -{' '}
+										{user.phone}
 									</option>
 								))}
-						</select>
+							</select>
+						</div>
 					</div>
-				</>
-			)}
-			<button type='submit'>Submit</button>
-			{message && <div>{message}</div>}
-		</form>
+
+					<div>
+						<label
+							htmlFor='transactionType'
+							className='block text-sm font-medium leading-6 text-gray-900'>
+							Transaction Type
+						</label>
+						<div className='mt-2'>
+							<select
+								id='transactionType'
+								name='transactionType'
+								value={transactionType}
+								onChange={(e) =>
+									setTransactionType(e.target.value)
+								}
+								required
+								className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'>
+								<option value='purchase'>Purchase</option>
+								<option value='cancellation'>
+									Cancellation
+								</option>
+								<option value='change'>Change</option>
+							</select>
+						</div>
+					</div>
+
+					{transactionType === 'purchase' && (
+						<div>
+							<label
+								htmlFor='ticketId'
+								className='block text-sm font-medium leading-6 text-gray-900'>
+								Ticket ID
+							</label>
+							<div className='mt-2'>
+								<select
+									id='ticketId'
+									name='ticketId'
+									value={ticketId}
+									onChange={(e) =>
+										setTicketId(e.target.value)
+									}
+									required
+									className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'>
+									<option value=''>Select Ticket</option>
+									{tickets
+										.filter(
+											(ticket) =>
+												ticket.status === 'Vendida',
+										)
+										.map((ticket) => (
+											<option
+												key={ticket.id}
+												value={ticket.id}>
+												{ticket.number}
+											</option>
+										))}
+								</select>
+							</div>
+						</div>
+					)}
+
+					{transactionType === 'cancellation' && (
+						<div>
+							<label
+								htmlFor='ticketId'
+								className='block text-sm font-medium leading-6 text-gray-900'>
+								Ticket ID
+							</label>
+							<div className='mt-2'>
+								<select
+									id='ticketId'
+									name='ticketId'
+									value={ticketId}
+									onChange={(e) =>
+										setTicketId(e.target.value)
+									}
+									required
+									className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'>
+									<option value=''>Select Ticket</option>
+									{transactions
+										.filter(
+											(transaction) =>
+												transaction.transaction_type ===
+												'purchase',
+										)
+										.map((transaction) => (
+											<option
+												key={transaction.id}
+												value={transaction.ticket_id}>
+												{transaction.ticket_id}
+											</option>
+										))}
+								</select>
+							</div>
+							{cancelTransactionId && (
+								<div>
+									<label
+										htmlFor='oldTicketNumber'
+										className='block text-sm font-medium leading-6 text-gray-900'>
+										Ticket Number
+									</label>
+									<input
+										id='oldTicketNumber'
+										type='text'
+										value={oldTicketNumber}
+										disabled
+										className='mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+									/>
+								</div>
+							)}
+						</div>
+					)}
+
+					{transactionType === 'change' && (
+						<>
+							<div>
+								<label
+									htmlFor='oldTicketNumber'
+									className='block text-sm font-medium leading-6 text-gray-900'>
+									Old Ticket Number
+								</label>
+								<input
+									id='oldTicketNumber'
+									type='text'
+									value={oldTicketNumber}
+									disabled
+									className='mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+								/>
+							</div>
+							<div>
+								<label
+									htmlFor='newTicketId'
+									className='block text-sm font-medium leading-6 text-gray-900'>
+									New Ticket ID
+								</label>
+								<div className='mt-2'>
+									<select
+										id='newTicketId'
+										name='newTicketId'
+										value={newTicketId}
+										onChange={(e) =>
+											setNewTicketId(e.target.value)
+										}
+										required
+										className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'>
+										<option value=''>
+											Select New Ticket
+										</option>
+										{tickets
+											.filter(
+												(ticket) =>
+													ticket.status ===
+													'Disponible',
+											)
+											.map((ticket) => (
+												<option
+													key={ticket.id}
+													value={ticket.id}>
+													{ticket.number}
+												</option>
+											))}
+									</select>
+								</div>
+							</div>
+						</>
+					)}
+
+					<div>
+						<button
+							type='submit'
+							className='flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
+							Submit
+						</button>
+					</div>
+				</form>
+
+				{message && (
+					<div className='text-center mt-4 text-green-600'>
+						{message}
+					</div>
+				)}
+			</div>
+		</div>
 	);
 };
 

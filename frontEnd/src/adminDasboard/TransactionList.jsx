@@ -1,4 +1,3 @@
-// src/components/TransactionList.jsx
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTransactions } from '../features/transactions/transactionSlice';
@@ -21,25 +20,37 @@ const TransactionList = () => {
 		content = <div>Loading...</div>;
 	} else if (status === 'succeeded') {
 		content = (
-			<table>
-				<thead>
-					<tr>
-						{/* <th>User ID</th> */}
-						<th>Ticket ID</th>
-						<th>Transaction Type</th>
-					</tr>
-				</thead>
-				<tbody>
-					{transactions.map((transaction, index) => (
-						<tr key={index}>
-							{/* <td>{transaction.id}</td>
-							<td>{transaction.user_id}</td> */}
-							<td>{transaction.ticket_id}</td>
-							<td>{transaction.transaction_type}</td>
+			<div className='overflow-x-auto'>
+				<h2 className='text-xl font-bold mb-4'>Transaction List</h2>
+				<table className='min-w-full divide-y divide-gray-200'>
+					<thead className='bg-gray-50'>
+						<tr>
+							<th
+								scope='col'
+								className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+								Ticket ID
+							</th>
+							<th
+								scope='col'
+								className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+								Transaction Type
+							</th>
 						</tr>
-					))}
-				</tbody>
-			</table>
+					</thead>
+					<tbody className='bg-white divide-y divide-gray-200'>
+						{transactions.map((transaction, index) => (
+							<tr key={index}>
+								<td className='px-6 py-4 whitespace-nowrap'>
+									{transaction.ticket_id}
+								</td>
+								<td className='px-6 py-4 whitespace-nowrap'>
+									{transaction.transaction_type}
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
 		);
 	} else if (status === 'failed') {
 		content = <div>{error}</div>;

@@ -1,4 +1,3 @@
-// src/components/UserList.jsx
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -36,20 +35,73 @@ const UserList = () => {
 		content = <div>Loading...</div>;
 	} else if (status === 'succeeded') {
 		content = (
-			<ul>
-				<h2>Buyers</h2>
-				{users.map((user) => (
-					<li key={user.id}>
-						{user.name} - {user.email} - {user.phone} -{user.id}
-						<button onClick={() => handleUpdate(user.id)}>
-							Edit
-						</button>
-						<button onClick={() => handleDelete(user.id)}>
-							Delete
-						</button>
-					</li>
-				))}
-			</ul>
+			<div className='overflow-x-auto'>
+				<h2 className='text-xl font-bold mb-4'>Buyers</h2>
+				<table className='min-w-full divide-y divide-gray-200'>
+					<thead className='bg-gray-50'>
+						<tr>
+							<th
+								scope='col'
+								className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+								Name
+							</th>
+							<th
+								scope='col'
+								className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+								Email
+							</th>
+							<th
+								scope='col'
+								className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+								Phone
+							</th>
+							<th
+								scope='col'
+								className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+								ID
+							</th>
+							<th scope='col' className='relative px-6 py-3'>
+								<span className='sr-only'>Edit</span>
+							</th>
+							<th scope='col' className='relative px-6 py-3'>
+								<span className='sr-only'>Delete</span>
+							</th>
+						</tr>
+					</thead>
+					<tbody className='bg-white divide-y divide-gray-200'>
+						{users.map((user) => (
+							<tr key={user.id}>
+								<td className='px-6 py-4 whitespace-nowrap'>
+									{user.name}
+								</td>
+								<td className='px-6 py-4 whitespace-nowrap'>
+									{user.email}
+								</td>
+								<td className='px-6 py-4 whitespace-nowrap'>
+									{user.phone}
+								</td>
+								<td className='px-6 py-4 whitespace-nowrap'>
+									{user.id}
+								</td>
+								<td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
+									<button
+										onClick={() => handleUpdate(user.id)}
+										className='text-indigo-600 hover:text-indigo-900'>
+										Edit
+									</button>
+								</td>
+								<td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
+									<button
+										onClick={() => handleDelete(user.id)}
+										className='text-red-600 hover:text-red-900'>
+										Delete
+									</button>
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
 		);
 	} else if (status === 'failed') {
 		content = <div>{error}</div>;
