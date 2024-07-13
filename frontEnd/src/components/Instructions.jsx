@@ -69,7 +69,8 @@ const Instructions = () => {
 					component='p'
 					className='text-lg'
 					sx={{ color: '#212121' }}>
-					1. Seleccionar una boleta.
+					1. Seleccionar una boleta. Cada boleta tiene un costo de 20
+					mil pesos.
 				</Typography>
 				<Typography
 					variant='h6'
@@ -122,8 +123,8 @@ const Instructions = () => {
 					component='p'
 					className='text-lg'
 					sx={{ color: '#212121', fontWeight: 'bold' }}>
-					6. Envia tu comprobante de consignación al número
-					3132074757 Para participar en el sorteo.
+					6. Envia tu comprobante de consignación al número 3132074757
+					Para participar en el sorteo.
 				</Typography>
 				<Typography
 					variant='body2'
