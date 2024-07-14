@@ -24,7 +24,10 @@ const CreateTransaction = () => {
 	const [oldTicketId, setOldTicketId] = useState('');
 	const [newTicketId, setNewTicketId] = useState('');
 	const [cancelTransactionId, setCancelTransactionId] = useState(null);
+	const [paymentMethod, setPaymentMethod] = useState('');
 	const [message, setMessage] = useState('');
+	const [filteredTickets, setFilteredTickets] = useState([]);
+
 	useEffect(() => {
 		dispatch(fetchUsers());
 		dispatch(fetchTickets());
@@ -72,6 +75,21 @@ const CreateTransaction = () => {
 			setOldTicketNumber('');
 		}
 	}, [transactionType, userId, transactions, tickets, ticketId]);
+
+	useEffect(() => {
+		if (userId) {
+			const user = users.find((u) => u.id === userId);
+			if (user) {
+				const userTickets = tickets.filter(
+					(ticket) =>
+						ticket.status === 'Vendida' &&
+						ticket.buyerName === user.name,
+				);
+				setFilteredTickets(userTickets);
+			}
+		}
+	}, [userId, tickets, users]);
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
@@ -81,6 +99,7 @@ const CreateTransaction = () => {
 						user_id: userId,
 						ticket_id: ticketId,
 						transaction_type: transactionType,
+						paymentMethod,
 					}),
 				).unwrap();
 			} else if (transactionType === 'cancellation') {
@@ -190,18 +209,13 @@ const CreateTransaction = () => {
 									required
 									className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'>
 									<option value=''>Select Ticket</option>
-									{tickets
-										.filter(
-											(ticket) =>
-												ticket.status === 'Vendida',
-										)
-										.map((ticket) => (
-											<option
-												key={ticket.id}
-												value={ticket.id}>
-												{ticket.number}
-											</option>
-										))}
+									{filteredTickets.map((ticket) => (
+										<option
+											key={ticket.id}
+											value={ticket.id}>
+											{ticket.number}
+										</option>
+									))}
 								</select>
 							</div>
 						</div>
@@ -312,7 +326,26 @@ const CreateTransaction = () => {
 							</div>
 						</>
 					)}
-
+					<div>
+						<label
+							htmlFor='paymendMethod'
+							className='block text-sm font-medium leading-6 text-gray-900'>
+							Payment Method:
+						</label>
+						<div className='mt-2'>
+							<select
+								className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+								value={paymentMethod}
+								onChange={(e) =>
+									setPaymentMethod(e.target.value)
+								}>
+								<option value=''>Select Payment Method</option>
+								<option value='Nequi'>Nequi</option>
+								<option value='DaviPlata'>DaviPlata</option>
+								<option value='Bancolombia'>Bancolombia</option>
+							</select>
+						</div>
+					</div>
 					<div>
 						<button
 							type='submit'
@@ -323,7 +356,7 @@ const CreateTransaction = () => {
 				</form>
 
 				{message && (
-					<div className='text-center mt-4 text-green-600'>
+					<div className='text-center mt-4 text-red-600'>
 						{message}
 					</div>
 				)}
