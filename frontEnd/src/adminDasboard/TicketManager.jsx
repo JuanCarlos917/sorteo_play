@@ -22,6 +22,18 @@ const TicketManager = () => {
 	if (status === 'loading') {
 		content = <div>Loading...</div>;
 	} else if (status === 'succeeded') {
+		// Ordenar las boletas para que las "Vendidas" aparezcan primero y luego por número
+		const sortedTickets = [...tickets].sort((a, b) => {
+			if (a.status === 'Vendida' && b.status !== 'Vendida') {
+				return -1;
+			}
+			if (a.status !== 'Vendida' && b.status === 'Vendida') {
+				return 1;
+			}
+			// Si ambos son del mismo estado, ordenar por número
+			return a.number - b.number;
+		});
+
 		content = (
 			<div className='overflow-x-auto'>
 				<h2 className='text-xl font-bold mb-4'>Ticket list</h2>
@@ -64,8 +76,8 @@ const TicketManager = () => {
 						</tr>
 					</thead>
 					<tbody className='bg-white divide-y divide-gray-200'>
-						{Array.isArray(tickets) &&
-							tickets.map((ticket, index) => (
+						{Array.isArray(sortedTickets) &&
+							sortedTickets.map((ticket, index) => (
 								<tr key={index}>
 									<td className='px-6 py-4 whitespace-nowrap'>
 										{ticket.number}
