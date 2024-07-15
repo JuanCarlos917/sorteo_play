@@ -16,9 +16,9 @@ module.exports = (sequelize) => {
 				unique: true,
 			},
 			status: {
-				type: DataTypes.STRING,
+				type: DataTypes.ENUM,
+				values: ['Disponible', 'Reservado', 'Vendida'],
 				defaultValue: 'Disponible',
-				allowNull: false,
 			},
 			buyerName: {
 				type: DataTypes.STRING,
