@@ -1,6 +1,6 @@
 // controllers/transactionController.js
 const { Transaction, Ticket, User } = require('../index');
-const {sendConfirmationEmail} = require('../services/emailService')
+const sendConfirmationEmail = require('../services/emailService');
 
 // Obtener todas las transacciones
 const getAllTransactions = async (req, res) => {
@@ -19,21 +19,21 @@ const createTransaction = async (req, res) => {
 		if (transaction_type === 'purchase') {
 			const ticket = await Ticket.findByPk(ticket_id);
 			const user = await User.findByPk(user_id);
-			if (ticket && ticket.status !== 'Vendida' && user) {
-				ticket.buyerName = user.name;
-				ticket.buyerContact = user.phone;
-				ticket.buyerEmail = user.email;
-				ticket.status = 'Vendida'; // Asegúrate de marcar el ticket como vendido
+
+			console.log('Ticket:', ticket);
+			console.log('User:', user);
+
+			if (ticket && ticket.status === 'Reservado' && user) {
+				ticket.status = 'Vendida';
 				await ticket.save();
 
 				const newTransaction = await Transaction.create({
 					user_id,
 					ticket_id,
 					transaction_type,
-					paymentMethod, // Almacena el método de pago
+					paymentMethod,
 				});
 
-				// Envía el correo electrónico de confirmación
 				await sendConfirmationEmail(
 					user.email,
 					ticket.number,
@@ -55,6 +55,10 @@ const createTransaction = async (req, res) => {
 		console.error(error);
 		res.status(500).json({ error: 'Error creating transaction' });
 	}
+};
+
+module.exports = {
+	createTransaction,
 };
 
 // Cancelar una compra de ticket
@@ -87,53 +91,70 @@ const cancelTransaction = async (req, res) => {
 	}
 };
 
-// Cambiar un ticket
+// Controlador para cambiar una boleta
 const changeTicket = async (req, res) => {
-	const { user_id, old_ticket_id, new_ticket_id } = req.body;
-	try {
-		const oldTicket = await Ticket.findByPk(old_ticket_id);
-		const newTicket = await Ticket.findByPk(new_ticket_id);
+    const { old_ticket_id, new_ticket_id, user_id } = req.body;
 
-		if (!oldTicket) {
-			return res.status(404).json({ error: 'Old ticket not found' });
-		}
-		if (!newTicket) {
-			return res.status(404).json({ error: 'New ticket not found' });
-		}
-		if (oldTicket.status !== 'Vendida') {
-			return res.status(400).json({ error: 'Old ticket is not sold' });
-		}
-		if (newTicket.status !== 'Disponible') {
-			return res
-				.status(400)
-				.json({ error: 'New ticket is not available' });
-		}
+    try {
+        // Encontrar las boletas y el usuario
+        const oldTicket = await Ticket.findByPk(old_ticket_id);
+        const newTicket = await Ticket.findByPk(new_ticket_id);
+        const user = await User.findByPk(user_id);
 
-		// Transfer data from old ticket to new ticket
-		newTicket.status = 'Vendida';
-		newTicket.buyerName = oldTicket.buyerName;
-		newTicket.buyerContact = oldTicket.buyerContact;
-		newTicket.buyerEmail = oldTicket.buyerEmail;
+        // Registros de depuración
+        console.log('Old Ticket:', oldTicket);
+        console.log('New Ticket:', newTicket);
+        console.log('User:', user);
 
-		// Clear old ticket data
-		oldTicket.status = 'Disponible';
-		oldTicket.buyerName = null;
-		oldTicket.buyerContact = null;
-		oldTicket.buyerEmail = null;
+        if (!oldTicket || oldTicket.status !== 'Vendida') {
+            return res.status(400).json({ error: 'Old ticket is not sold or does not exist' });
+        }
 
-		await oldTicket.save();
-		await newTicket.save();
+        if (!newTicket || newTicket.status !== 'Disponible') {
+            return res.status(400).json({ error: 'New ticket is not available or does not exist' });
+        }
 
-		const newTransaction = await Transaction.create({
-			user_id,
-			ticket_id: new_ticket_id,
-			transaction_type: 'change',
-		});
-		res.status(201).json(newTransaction);
-	} catch (error) {
-		console.error('Error changing ticket:', error);
-		res.status(500).json({ error: 'Error changing ticket' });
-	}
+        if (!user) {
+            return res.status(400).json({ error: 'User not found' });
+        }
+
+        // Actualizar la antigua boleta
+        oldTicket.status = 'Disponible';
+        oldTicket.buyerName = null;
+        oldTicket.buyerContact = null;
+        oldTicket.buyerEmail = null;
+        await oldTicket.save();
+
+        // Actualizar la nueva boleta
+        newTicket.status = 'Vendida';
+        newTicket.buyerName = user.name;
+        newTicket.buyerContact = user.phone;
+        newTicket.buyerEmail = user.email;
+        await newTicket.save();
+
+        // Actualizar la transacción
+        const transaction = await Transaction.findOne({
+            where: {
+                user_id: user_id,
+                ticket_id: old_ticket_id,
+                transaction_type: 'purchase'
+            }
+        });
+
+        if (transaction) {
+            transaction.ticket_id = new_ticket_id;
+            await transaction.save();
+        }
+
+        res.status(200).json({
+            message: 'Ticket changed successfully',
+            updatedOldTicket: oldTicket,
+            updatedNewTicket: newTicket
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error changing ticket' });
+    }
 };
 
 module.exports = {
@@ -141,4 +162,5 @@ module.exports = {
 	createTransaction,
 	cancelTransaction,
 	changeTicket,
+
 };
