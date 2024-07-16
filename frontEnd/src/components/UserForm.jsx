@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createUser } from '../features/users/userSlice';
 import { reserveTicket } from '../features/tickets/ticketSlice';
 import AvailableTickets from './AvailableTickets';
+import UserInfoForm from './UserInfoForm';
 import {
 	validateName,
 	validateEmail,
 	validatePhone,
 } from '../utils/validation';
 import {
-	TextField,
 	Button,
 	Typography,
 	Box,
@@ -130,89 +130,14 @@ const UserForm = () => {
 					selectedTicket={selectedTicket}
 					setTicketsAvailable={setTicketsAvailable}
 				/>
-				<TextField
-					label='Nombre y Apellido'
-					value={name}
-					onChange={(e) => setName(e.target.value)}
-					fullWidth
-					margin='normal'
-					error={!!error.name}
-					helperText={error.name}
-					required
-					sx={{
-						input: { color: '#263238' },
-						'& .MuiInputLabel-root.Mui-focused': {
-							color: '#263238',
-						},
-						label: { color: '#616161' },
-						'& .MuiOutlinedInput-root': {
-							'& fieldset': {
-								borderColor: '#e0e0e0',
-							},
-							'&:hover fieldset': {
-								borderColor: '#c0c0c0',
-							},
-							'&.Mui-focused fieldset': {
-								borderColor: '#bdbdbd',
-							},
-						},
-					}}
-				/>
-				<TextField
-					label='Email'
-					value={email}
-					onChange={(e) => setEmail(e.target.value)}
-					fullWidth
-					margin='normal'
-					error={!!error.email}
-					helperText={error.email}
-					required
-					sx={{
-						input: { color: '#263238' },
-						'& .MuiInputLabel-root.Mui-focused': {
-							color: '#263238',
-						},
-						label: { color: '#616161' },
-						'& .MuiOutlinedInput-root': {
-							'& fieldset': {
-								borderColor: '#e0e0e0',
-							},
-							'&:hover fieldset': {
-								borderColor: '#c0c0c0',
-							},
-							'&.Mui-focused fieldset': {
-								borderColor: '#bdbdbd',
-							},
-						},
-					}}
-				/>
-				<TextField
-					label='Celular'
-					value={phone}
-					onChange={(e) => setPhone(e.target.value)}
-					fullWidth
-					margin='normal'
-					error={!!error.phone}
-					helperText={error.phone}
-					required
-					sx={{
-						input: { color: '#263238' },
-						'& .MuiInputLabel-root.Mui-focused': {
-							color: '#263238',
-						},
-						label: { color: '#616161' },
-						'& .MuiOutlinedInput-root': {
-							'& fieldset': {
-								borderColor: '#e0e0e0',
-							},
-							'&:hover fieldset': {
-								borderColor: '#c0c0c0',
-							},
-							'&.Mui-focused fieldset': {
-								borderColor: '#bdbdbd',
-							},
-						},
-					}}
+				<UserInfoForm
+					name={name}
+					setName={setName}
+					email={email}
+					setEmail={setEmail}
+					phone={phone}
+					setPhone={setPhone}
+					error={error}
 				/>
 				<Button
 					type='submit'
@@ -255,5 +180,7 @@ const UserForm = () => {
 		</Container>
 	);
 };
+
+
 
 export default UserForm;
