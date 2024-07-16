@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createUser } from '../features/users/userSlice';
-import { updateTicket } from '../features/tickets/ticketSlice';
+import { reserveTicket } from '../features/tickets/ticketSlice';
 import AvailableTickets from './AvailableTickets';
 import {
 	validateName,
@@ -44,28 +44,34 @@ const UserForm = () => {
 			return;
 		}
 
-		const resultAction = await dispatch(createUser({ name, email, phone }));
-
-		if (createUser.fulfilled.match(resultAction)) {
-			dispatch(
-				updateTicket({
-					id: selectedTicket,
-					ticket: {
-						status: 'Vendida',
-						buyerName: name,
-						buyerContact: phone,
-						buyerEmail: email,
-					},
-				}),
+		try {
+			const userResult = await dispatch(
+				createUser({ name, email, phone }),
 			);
+			const user = userResult.payload;
 
-			setName('');
-			setEmail('');
-			setPhone('');
-			setSelectedTicket('');
-			setMessage(
-				'Gracias por su compra. El boleto se ha adquirido correctamente.',
-			);
+			if (user && selectedTicket) {
+				const reserveResult = await dispatch(
+					reserveTicket({
+						ticket_id: selectedTicket,
+						user_id: user.id,
+					}),
+				);
+
+				if (reserveResult.type === 'tickets/reserveTicket/fulfilled') {
+					setMessage(
+						'Gracias por su compra. El boleto se ha adquirido correctamente.',
+					);
+					setName('');
+					setEmail('');
+					setPhone('');
+					setSelectedTicket('');
+				} else {
+					setMessage('Hubo un error al reservar la boleta.');
+				}
+			}
+		} catch (err) {
+			setMessage('Hubo un error al procesar su solicitud.');
 		}
 	};
 
@@ -122,7 +128,7 @@ const UserForm = () => {
 				<AvailableTickets
 					onTicketChange={handleTicketChange}
 					selectedTicket={selectedTicket}
-					setTicketsAvailable={setTicketsAvailable} // Asegúrate de pasar la función aquí
+					setTicketsAvailable={setTicketsAvailable}
 				/>
 				<TextField
 					label='Nombre y Apellido'
