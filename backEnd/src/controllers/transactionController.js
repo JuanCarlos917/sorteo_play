@@ -4,7 +4,7 @@ const {
 	sendConfirmationEmail,
 	sendCancellationEmail,
 	sendChangeEmail,
-} = require('../emailServices/emailService');
+} = require('../services/emailService');
 
 // Obtener todas las transacciones
 const getAllTransactions = async (req, res) => {
