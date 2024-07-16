@@ -20,6 +20,10 @@ module.exports = (sequelize) => {
 			type: DataTypes.ENUM('purchase', 'cancellation', 'change'),
 			allowNull: false,
 		},
+		paymentMethod: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
 	});
 
 	return Transaction;

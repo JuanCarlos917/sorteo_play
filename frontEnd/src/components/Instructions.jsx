@@ -131,7 +131,7 @@ const Instructions = () => {
 					component='p'
 					className='text-sm mt-6'
 					sx={{ color: '#212121', marginTop: '24px' }}>
-					Se sorteará un Play Station 5 digital y el premio se
+					Se sorteará un Play Station 5 Slim digital y el premio se
 					entregará con los tres últimos dígitos de la Lotería de
 					Bogotá. En el evento que el rango de los últimos tres
 					dígitos supere el rango máximo de las boletas, se tomará los
