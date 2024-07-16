@@ -27,6 +27,7 @@ const CreateTransaction = () => {
 	const [paymentMethod, setPaymentMethod] = useState('');
 	const [message, setMessage] = useState('');
 	const [filteredTickets, setFilteredTickets] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
 		dispatch(fetchUsers());
@@ -82,7 +83,7 @@ const CreateTransaction = () => {
 			if (user) {
 				const userTickets = tickets.filter(
 					(ticket) =>
-						ticket.status === 'Vendida' &&
+						ticket.status === 'Reservado' &&
 						ticket.buyerName === user.name,
 				);
 				setFilteredTickets(userTickets);
@@ -92,6 +93,7 @@ const CreateTransaction = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		setIsLoading(true);
 		try {
 			if (transactionType === 'purchase') {
 				await dispatch(
@@ -123,12 +125,14 @@ const CreateTransaction = () => {
 		} catch (error) {
 			setMessage(`Error: ${error.message}`);
 		}
+		setIsLoading(false);
 		setUserId('');
 		setTicketId('');
 		setTransactionType('purchase');
 		setOldTicketNumber('');
 		setOldTicketId('');
 		setNewTicketId('');
+		setPaymentMethod('');
 	};
 
 	return (
@@ -145,7 +149,7 @@ const CreateTransaction = () => {
 						<label
 							htmlFor='userId'
 							className='block text-sm font-medium leading-6 text-gray-900'>
-							User ID
+							User Name
 						</label>
 						<div className='mt-2'>
 							<select
@@ -209,14 +213,45 @@ const CreateTransaction = () => {
 									required
 									className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'>
 									<option value=''>Select Ticket</option>
-									{filteredTickets.map((ticket) => (
-										<option
-											key={ticket.id}
-											value={ticket.id}>
-											{ticket.number}
-										</option>
-									))}
+									{tickets
+										.filter(
+											(ticket) =>
+												ticket.status === 'Reservado',
+										)
+										.map((ticket) => (
+											<option
+												key={ticket.id}
+												value={ticket.id}>
+												{ticket.number}
+											</option>
+										))}
 								</select>
+							</div>
+							<div>
+								<label
+									htmlFor='paymentMethod'
+									className='block text-sm font-medium leading-6 text-gray-900'>
+									Payment Method:
+								</label>
+								<div className='mt-2'>
+									<select
+										className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+										value={paymentMethod}
+										onChange={(e) =>
+											setPaymentMethod(e.target.value)
+										}>
+										<option value=''>
+											Select Payment Method
+										</option>
+										<option value='Nequi'>Nequi</option>
+										<option value='DaviPlata'>
+											DaviPlata
+										</option>
+										<option value='Bancolombia'>
+											Bancolombia
+										</option>
+									</select>
+								</div>
 							</div>
 						</div>
 					)}
@@ -326,37 +361,19 @@ const CreateTransaction = () => {
 							</div>
 						</>
 					)}
-					<div>
-						<label
-							htmlFor='paymendMethod'
-							className='block text-sm font-medium leading-6 text-gray-900'>
-							Payment Method:
-						</label>
-						<div className='mt-2'>
-							<select
-								className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-								value={paymentMethod}
-								onChange={(e) =>
-									setPaymentMethod(e.target.value)
-								}>
-								<option value=''>Select Payment Method</option>
-								<option value='Nequi'>Nequi</option>
-								<option value='DaviPlata'>DaviPlata</option>
-								<option value='Bancolombia'>Bancolombia</option>
-							</select>
-						</div>
-					</div>
+
 					<div>
 						<button
 							type='submit'
-							className='flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
-							Submit
+							className='flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+							disabled={isLoading}>
+							{isLoading ? 'Enviando...' : 'Submit'}
 						</button>
 					</div>
 				</form>
 
 				{message && (
-					<div className='text-center mt-4 text-red-600'>
+					<div className='text-center mt-4 text-green-600'>
 						{message}
 					</div>
 				)}
