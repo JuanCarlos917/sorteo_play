@@ -9,6 +9,12 @@ import {
 	changeTicket,
 } from '../features/transactions/transactionSlice';
 
+import UserSelect from './transactions/UserSelect';
+import TransactionTypeSelect from './transactions/TransactionTypeSelect';
+import TicketSelect from './transactions/TicketSelect';
+import PaymentMethodSelect from './transactions/PaymentMethodSelect';
+import Message from './transactions/Message';
+
 const CreateTransaction = () => {
 	const dispatch = useDispatch();
 	const users = useSelector((state) => state.users.users);
@@ -145,223 +151,31 @@ const CreateTransaction = () => {
 
 			<div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
 				<form className='space-y-6' onSubmit={handleSubmit}>
-					<div>
-						<label
-							htmlFor='userId'
-							className='block text-sm font-medium leading-6 text-gray-900'>
-							User Name
-						</label>
-						<div className='mt-2'>
-							<select
-								id='userId'
-								name='userId'
-								value={userId}
-								onChange={(e) => setUserId(e.target.value)}
-								required
-								className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'>
-								<option value=''>Select User</option>
-								{users.map((user) => (
-									<option key={user.id} value={user.id}>
-										{user.name} - {user.email} -{' '}
-										{user.phone}
-									</option>
-								))}
-							</select>
-						</div>
-					</div>
-
-					<div>
-						<label
-							htmlFor='transactionType'
-							className='block text-sm font-medium leading-6 text-gray-900'>
-							Transaction Type
-						</label>
-						<div className='mt-2'>
-							<select
-								id='transactionType'
-								name='transactionType'
-								value={transactionType}
-								onChange={(e) =>
-									setTransactionType(e.target.value)
-								}
-								required
-								className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'>
-								<option value='purchase'>Purchase</option>
-								<option value='cancellation'>
-									Cancellation
-								</option>
-								<option value='change'>Change</option>
-							</select>
-						</div>
-					</div>
-
-					{transactionType === 'purchase' && (
-						<div>
-							<label
-								htmlFor='ticketId'
-								className='block text-sm font-medium leading-6 text-gray-900'>
-								Ticket ID
-							</label>
-							<div className='mt-2'>
-								<select
-									id='ticketId'
-									name='ticketId'
-									value={ticketId}
-									onChange={(e) =>
-										setTicketId(e.target.value)
-									}
-									required
-									className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'>
-									<option value=''>Select Ticket</option>
-									{tickets
-										.filter(
-											(ticket) =>
-												ticket.status === 'Reservado',
-										)
-										.map((ticket) => (
-											<option
-												key={ticket.id}
-												value={ticket.id}>
-												{ticket.number}
-											</option>
-										))}
-								</select>
-							</div>
-							<div>
-								<label
-									htmlFor='paymentMethod'
-									className='block text-sm font-medium leading-6 text-gray-900'>
-									Payment Method:
-								</label>
-								<div className='mt-2'>
-									<select
-										className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-										value={paymentMethod}
-										onChange={(e) =>
-											setPaymentMethod(e.target.value)
-										}>
-										<option value=''>
-											Select Payment Method
-										</option>
-										<option value='Nequi'>Nequi</option>
-										<option value='DaviPlata'>
-											DaviPlata
-										</option>
-										<option value='Bancolombia'>
-											Bancolombia
-										</option>
-									</select>
-								</div>
-							</div>
-						</div>
-					)}
-
-					{transactionType === 'cancellation' && (
-						<div>
-							<label
-								htmlFor='ticketId'
-								className='block text-sm font-medium leading-6 text-gray-900'>
-								Ticket ID
-							</label>
-							<div className='mt-2'>
-								<select
-									id='ticketId'
-									name='ticketId'
-									value={ticketId}
-									onChange={(e) =>
-										setTicketId(e.target.value)
-									}
-									required
-									className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'>
-									<option value=''>Select Ticket</option>
-									{transactions
-										.filter(
-											(transaction) =>
-												transaction.transaction_type ===
-												'purchase',
-										)
-										.map((transaction) => (
-											<option
-												key={transaction.id}
-												value={transaction.ticket_id}>
-												{transaction.ticket_id}
-											</option>
-										))}
-								</select>
-							</div>
-							{cancelTransactionId && (
-								<div>
-									<label
-										htmlFor='oldTicketNumber'
-										className='block text-sm font-medium leading-6 text-gray-900'>
-										Ticket Number
-									</label>
-									<input
-										id='oldTicketNumber'
-										type='text'
-										value={oldTicketNumber}
-										disabled
-										className='mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-									/>
-								</div>
-							)}
-						</div>
-					)}
-
-					{transactionType === 'change' && (
-						<>
-							<div>
-								<label
-									htmlFor='oldTicketNumber'
-									className='block text-sm font-medium leading-6 text-gray-900'>
-									Old Ticket Number
-								</label>
-								<input
-									id='oldTicketNumber'
-									type='text'
-									value={oldTicketNumber}
-									disabled
-									className='mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-								/>
-							</div>
-							<div>
-								<label
-									htmlFor='newTicketId'
-									className='block text-sm font-medium leading-6 text-gray-900'>
-									New Ticket ID
-								</label>
-								<div className='mt-2'>
-									<select
-										id='newTicketId'
-										name='newTicketId'
-										value={newTicketId}
-										onChange={(e) =>
-											setNewTicketId(e.target.value)
-										}
-										required
-										className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'>
-										<option value=''>
-											Select New Ticket
-										</option>
-										{tickets
-											.filter(
-												(ticket) =>
-													ticket.status ===
-													'Disponible',
-											)
-											.map((ticket) => (
-												<option
-													key={ticket.id}
-													value={ticket.id}>
-													{ticket.number}
-												</option>
-											))}
-									</select>
-								</div>
-							</div>
-						</>
-					)}
-
+					<UserSelect
+						users={users}
+						userId={userId}
+						setUserId={setUserId}
+					/>
+					<TransactionTypeSelect
+						transactionType={transactionType}
+						setTransactionType={setTransactionType}
+					/>
+					<TicketSelect
+						tickets={tickets}
+						ticketId={ticketId}
+						setTicketId={setTicketId}
+						transactionType={transactionType}
+						transactions={transactions}
+						cancelTransactionId={cancelTransactionId}
+						oldTicketNumber={oldTicketNumber}
+						newTicketId={newTicketId}
+						setNewTicketId={setNewTicketId}
+						filteredTickets={filteredTickets}
+					/>
+					<PaymentMethodSelect
+						paymentMethod={paymentMethod}
+						setPaymentMethod={setPaymentMethod}
+					/>
 					<div>
 						<button
 							type='submit'
@@ -371,12 +185,7 @@ const CreateTransaction = () => {
 						</button>
 					</div>
 				</form>
-
-				{message && (
-					<div className='text-center mt-4 text-green-600'>
-						{message}
-					</div>
-				)}
+				<Message message={message} />
 			</div>
 		</div>
 	);
