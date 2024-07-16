@@ -29,17 +29,6 @@ export const createTicket = createAsyncThunk(
 	},
 );
 
-export const updateTicket = createAsyncThunk(
-	'tickets/updateTicket',
-	async ({ id, ticket }) => {
-		const response = await axios.put(
-			`${API_BASE_URL}/api/tickets/${id}`,
-			ticket,
-		);
-		return response.data;
-	},
-);
-
 export const deleteTicket = createAsyncThunk(
 	'tickets/deleteTicket',
 	async (id) => {
@@ -48,22 +37,13 @@ export const deleteTicket = createAsyncThunk(
 	},
 );
 
-export const changeTicket = createAsyncThunk(
-	'tickets/changeTicket',
-	async ({
-		currentNumber,
-		newNumber,
-		buyerName,
-		buyerContact,
-		buyerEmail,
-	}) => {
-		const response = await axios.post(`${API_BASE_URL}/api/tickets/change`, {
-			currentNumber,
-			newNumber,
-			buyerName,
-			buyerContact,
-			buyerEmail,
-		});
+export const reserveTicket = createAsyncThunk(
+	'tickets/reserveTicket',
+	async ({ ticket_id, user_id }) => {
+		const response = await axios.post(
+			`${API_BASE_URL}/api/tickets/reserve`,
+			{ ticket_id, user_id },
+		);
 		return response.data;
 	},
 );
@@ -88,40 +68,17 @@ const ticketSlice = createSlice({
 			.addCase(createTicket.fulfilled, (state, action) => {
 				state.tickets.push(action.payload);
 			})
-			.addCase(updateTicket.fulfilled, (state, action) => {
-				const index = state.tickets.findIndex(
-					(ticket) => ticket.id === action.payload.id,
-				);
-				state.tickets[index] = action.payload;
-			})
 			.addCase(deleteTicket.fulfilled, (state, action) => {
 				state.tickets = state.tickets.filter(
 					(ticket) => ticket.id !== action.payload,
 				);
 			})
-			.addCase(changeTicket.fulfilled, (state, action) => {
-				const currentIndex = state.tickets.findIndex(
-					(ticket) =>
-						ticket.number ===
-						action.payload.updatedCurrentTicket.number,
+			.addCase(reserveTicket.fulfilled, (state, action) => {
+				const index = state.tickets.findIndex(
+					(ticket) => ticket.id === action.payload.id,
 				);
-				const newIndex = state.tickets.findIndex(
-					(ticket) =>
-						ticket.number ===
-						action.payload.updatedNewTicket.number,
-				);
-
-				if (currentIndex !== -1) {
-					state.tickets[currentIndex] = {
-						...state.tickets[currentIndex],
-						...action.payload.updatedCurrentTicket,
-					};
-				}
-				if (newIndex !== -1) {
-					state.tickets[newIndex] = {
-						...state.tickets[newIndex],
-						...action.payload.updatedNewTicket,
-					};
+				if (index !== -1) {
+					state.tickets[index] = action.payload;
 				}
 			});
 	},
