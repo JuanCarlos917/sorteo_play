@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTickets } from '../features/tickets/ticketSlice';
 import {
@@ -11,7 +12,11 @@ import {
 	Box,
 } from '@mui/material';
 
-const AvailableTickets = ({ onTicketChange, selectedTicket, setTicketsAvailable }) => {
+const AvailableTickets = ({
+	onTicketChange,
+	selectedTicket,
+	setTicketsAvailable,
+}) => {
 	const dispatch = useDispatch();
 	const tickets = useSelector((state) => state.tickets.tickets);
 	const status = useSelector((state) => state.tickets.status);
@@ -105,6 +110,12 @@ const AvailableTickets = ({ onTicketChange, selectedTicket, setTicketsAvailable 
 	}
 
 	return <Box>{content}</Box>;
+};
+
+AvailableTickets.propTypes = {
+	onTicketChange: PropTypes.func.isRequired,
+	selectedTicket: PropTypes.string.isRequired,
+	setTicketsAvailable: PropTypes.func.isRequired,
 };
 
 export default AvailableTickets;
