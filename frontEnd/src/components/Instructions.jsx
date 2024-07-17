@@ -69,8 +69,8 @@ const Instructions = () => {
 					component='p'
 					className='text-lg'
 					sx={{ color: '#212121' }}>
-					1. Seleccionar una boleta. Cada boleta tiene un costo de 20
-					mil pesos.
+					1. Seleccionar una boleta. Cada boleta tiene un costo de{' '}
+					<strong>10 mil pesos.</strong>
 				</Typography>
 				<Typography
 					variant='h6'
@@ -137,7 +137,11 @@ const Instructions = () => {
 					dígitos supere el rango máximo de las boletas, se tomará los
 					últimos tres dígitos de la Lotería de Medellín y, en el
 					último caso, que ninguna de las dos se cumpla, se sorteará
-					con la Lotería de Boyacá.
+					con la Lotería de Boyacá. Si ninguno de los escenearios
+					anteriores se cumple, vuelve y se sortea al dia siguiente,
+					hasta que haya un ganador. El sorteo se realizará el 30 de
+					agosto de 2024 o cuando se hayan vendido todas las boletas,
+					lo que ocurra primero
 				</Typography>
 			</Box>
 			<Snackbar
