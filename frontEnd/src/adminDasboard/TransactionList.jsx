@@ -40,6 +40,11 @@ const TransactionList = () => {
 								className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
 								Transaction Type
 							</th>
+							<th
+								scope='col'
+								className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+								Payment Method
+							</th>
 						</tr>
 					</thead>
 					<tbody className='bg-white divide-y divide-gray-200'>
@@ -53,6 +58,9 @@ const TransactionList = () => {
 								</td>
 								<td className='px-6 py-4 whitespace-nowrap'>
 									{transaction.transaction_type}
+								</td>
+								<td className='px-6 py-4 whitespace-nowrap'>
+									{transaction.paymentMethod}
 								</td>
 							</tr>
 						))}
