@@ -47,4 +47,4 @@ backEnd/.env
 .env.development.local
 .env.test.local
 .env.production.local
-backEnd/.env
+backEnd/.env.env
