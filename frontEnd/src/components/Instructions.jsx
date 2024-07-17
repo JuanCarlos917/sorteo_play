@@ -124,7 +124,7 @@ const Instructions = () => {
 					className='text-lg'
 					sx={{ color: '#212121', fontWeight: 'bold' }}>
 					6. Envia tu comprobante de consignación al número 3132074757
-					Para participar en el sorteo.
+					Para registrar tu boleta y participar en el sorteo.
 				</Typography>
 				<Typography
 					variant='body2'
@@ -141,7 +141,7 @@ const Instructions = () => {
 					anteriores se cumple, vuelve y se sortea al dia siguiente,
 					hasta que haya un ganador. El sorteo se realizará el 30 de
 					agosto de 2024 o cuando se hayan vendido todas las boletas,
-					lo que ocurra primero
+					lo que ocurra primero.
 				</Typography>
 			</Box>
 			<Snackbar
