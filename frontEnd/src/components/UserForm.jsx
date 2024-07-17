@@ -9,13 +9,7 @@ import {
 	validateEmail,
 	validatePhone,
 } from '../utils/validation';
-import {
-	Button,
-	Typography,
-	Box,
-	Container,
-	Alert,
-} from '@mui/material';
+import { Button, Typography, Box, Container, Alert } from '@mui/material';
 import ps5 from '../assets/icon-ps5.svg';
 import cod from '../assets/icons8-call-of-duty-mobile.svg';
 import fifa24 from '../assets/EA_Sports_FC_24_logo.svg';
@@ -30,17 +24,19 @@ const UserForm = () => {
 	const [error, setError] = useState({});
 	const [message, setMessage] = useState('');
 	const [ticketsAvailable, setTicketsAvailable] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 	const ticketError = useSelector((state) => state.tickets.error);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-
+		setIsLoading(true);
 		const nameError = validateName(name);
 		const emailError = validateEmail(email);
 		const phoneError = validatePhone(phone);
 
 		if (nameError || emailError || phoneError) {
 			setError({ name: nameError, email: emailError, phone: phoneError });
+            setIsLoading(false);
 			return;
 		}
 
@@ -73,6 +69,7 @@ const UserForm = () => {
 		} catch (err) {
 			setMessage('Hubo un error al procesar su solicitud.');
 		}
+        setIsLoading(false);
 	};
 
 	const handleTicketChange = (e) => {
@@ -143,7 +140,7 @@ const UserForm = () => {
 					type='submit'
 					variant='contained'
 					fullWidth
-					disabled={!ticketsAvailable} // Deshabilita el botón si no hay boletos disponibles
+					disabled={!ticketsAvailable || isLoading}
 					sx={{
 						mt: 2,
 						bgcolor: 'transparent',
@@ -161,7 +158,7 @@ const UserForm = () => {
 							outlineOffset: '2px',
 						},
 					}}>
-					Registrar
+					{isLoading ? 'Enviando...' : 'Registrar'}
 				</Button>
 				{message && (
 					<Typography
@@ -180,7 +177,5 @@ const UserForm = () => {
 		</Container>
 	);
 };
-
-
 
 export default UserForm;
