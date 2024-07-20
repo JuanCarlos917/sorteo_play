@@ -5,6 +5,13 @@ import {
 	RouterProvider,
 	Outlet,
 } from 'react-router-dom';
+import './App.css'
+
+import NavbarAdmin from './adminDasboard/NavbarAdmin';
+import AddTicketForm from './adminDasboard/AddTicketForm';
+import CreateTransaction from './adminDasboard/CreateTransaction';
+import UserList from './adminDasboard/UserList';
+import TransactionList from './adminDasboard/TransactionList';
 import TicketManager from './adminDasboard/TicketManager';
 import UserForm from './components/UserForm';
 import Instructions from './components/Instructions';
@@ -16,34 +23,43 @@ function App() {
 		createRoutesFromElements(
 			<Route path='/' element={<Root />}>
 				<Route index element={<Home />} />
-				<Route path='dashboard' element={<TicketManager />} />
+				<Route path='dashboard' element={<NavbarAdmin />}>
+					<Route index element={<TicketManager />} />
+					<Route path='add-tickets' element={<AddTicketForm />} />
+					<Route
+						path='create-transactions'
+						element={<CreateTransaction />}
+					/>
+					<Route path='clients' element={<UserList />} />
+					<Route path='sales-list' element={<TransactionList />} />
+				</Route>
 				<Route path='*' element={<NotFound404 />} />
 			</Route>,
 		),
 	);
 
 	return (
-		<>
+		<div className='App'>
 			<RouterProvider router={router} />
 			<Footer />
-		</>
+		</div>
 	);
 }
 
 const Root = () => {
 	return (
-		<>
+		<div className='content'>
 			<Outlet />
-		</>
+		</div>
 	);
 };
 
 const Home = () => {
 	return (
-		<>
+		<div className='content'>
 			<UserForm />
 			<Instructions />
-		</>
+		</div>
 	);
 };
 

@@ -8,7 +8,7 @@ import {
 	Alert,
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import sony from '../assets/Sony_logo.svg';
+
 
 const Instructions = () => {
 	const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -48,7 +48,7 @@ const Instructions = () => {
 			<div className='sm:mx-auto sm:w-full sm:max-w-sm pb-10'>
 				<img
 					className='mx-auto'
-					src={sony}
+					src='https://res.cloudinary.com/dcqkvu95d/image/upload/v1721510186/Sony_logo_d1lheu.svg'
 					alt='logo PlayStation'
 					style={{ height: '20px', width: 'auto' }}
 				/>

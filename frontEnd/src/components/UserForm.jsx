@@ -10,10 +10,6 @@ import {
 	validatePhone,
 } from '../utils/validation';
 import { Button, Typography, Box, Container, Alert } from '@mui/material';
-import ps5 from '../assets/icon-ps5.svg';
-import cod from '../assets/icons8-call-of-duty-mobile.svg';
-import fifa24 from '../assets/EA_Sports_FC_24_logo.svg';
-import logoPlayStation from '../assets/icons8-play-station.svg';
 
 const UserForm = () => {
 	const dispatch = useDispatch();
@@ -83,12 +79,12 @@ const UserForm = () => {
 			<div className='sm:mx-auto sm:w-full sm:max-w-sm'>
 				<div className='flex justify-center items-center space-x-4'>
 					<img
-						src={logoPlayStation}
+						src='https://res.cloudinary.com/dcqkvu95d/image/upload/v1721510186/icons8-play-station_ffmjnt.svg'
 						alt='PlayStation Logo'
 						style={{ height: '50px', width: 'auto' }}
 					/>
 					<img
-						src={ps5}
+						src='https://res.cloudinary.com/dcqkvu95d/image/upload/v1721510187/icon-ps5_cevnnq.svg'
 						alt='PS5'
 						style={{ height: '100px', width: 'auto' }}
 					/>
@@ -106,13 +102,13 @@ const UserForm = () => {
 					className='space-x-4'>
 					<img
 						className='mx-2'
-						src={cod}
+						src='https://res.cloudinary.com/dcqkvu95d/image/upload/v1721510189/icons8-call-of-duty-mobile_y32wy3.svg'
 						alt='COD'
 						style={{ height: '40px', width: 'auto' }}
 					/>
 					<img
 						className='mx-2'
-						src={fifa24}
+						src='https://res.cloudinary.com/dcqkvu95d/image/upload/v1721510189/EA_Sports_FC_24_logo_c2mgzg.svg'
 						alt='FIFA 24'
 						style={{ height: '40px', width: 'auto' }}
 					/>

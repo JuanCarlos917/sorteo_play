@@ -20,7 +20,7 @@ const TransactionList = () => {
 		content = <div>Loading...</div>;
 	} else if (status === 'succeeded') {
 		content = (
-			<div className='overflow-x-auto'>
+			<div className='overflow-x-auto pt-5'>
 				<h2 className='text-xl font-bold mb-4'>Transaction List</h2>
 				<table className='min-w-full divide-y divide-gray-200'>
 					<thead className='bg-gray-50'>
