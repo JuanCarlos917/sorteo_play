@@ -1,10 +1,16 @@
 // controllers/transactionController.js
 const { Transaction, Ticket, User } = require('../index');
+// const {
+// 	sendConfirmationEmail,
+// 	sendCancellationEmail,
+// 	sendChangeEmail,
+// } = require('../services/emailServiceOutlook');
+
 const {
 	sendConfirmationEmail,
 	sendCancellationEmail,
 	sendChangeEmail,
-} = require('../services/emailService');
+} = require('../services/emailServiceGmail');
 
 // Obtener todas las transacciones
 const getAllTransactions = async (req, res) => {
