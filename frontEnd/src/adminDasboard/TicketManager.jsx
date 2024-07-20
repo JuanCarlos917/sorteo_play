@@ -1,10 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTickets, deleteTicket } from '../features/tickets/ticketSlice';
-import AddTicketForm from './AddTicketForm';
-import UserList from './UserList';
-import CreateTransaction from './CreateTransaction';
-import TransactionList from './TransactionList';
 
 const TicketManager = () => {
 	const dispatch = useDispatch();
@@ -34,7 +30,7 @@ const TicketManager = () => {
 		});
 
 		content = (
-			<div className='overflow-x-auto'>
+			<div className='overflow-x-auto pt-5'>
 				<h2 className='text-xl font-bold mb-4'>Ticket list</h2>
 				<table className='min-w-full divide-y divide-gray-200'>
 					<thead className='bg-gray-50'>
@@ -118,11 +114,7 @@ const TicketManager = () => {
 	}
 
 	return (
-		<div className='space-y-8'>
-			<AddTicketForm />
-			<CreateTransaction />
-			<TransactionList />
-			<UserList />
+		<div>
 			{content}
 		</div>
 	);
