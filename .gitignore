@@ -34,8 +34,6 @@ dist-ssr
 *.sln
 *.sw?
 backEnd/.env
-/backEnd
-backEnd/.env
 
 # Ignorar archivos de claves globales
 *.key
