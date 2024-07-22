@@ -3,11 +3,20 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 
 const navigation = [
-    { name: 'Ticket Manager', href: '/dashboard', current: false },
-    { name: 'Create Transactions', href: '/dashboard/create-transactions', current: false },
-    { name: 'Clients', href: '/dashboard/clients', current: false },
-    { name: 'Sales List', href: '/dashboard/sales-list', current: false },
-    { name: 'Add Tickets', href: '/dashboard/add-tickets', current: false },
+	{ name: ' Ticket Manager', href: '/dashboard', current: false },
+	{
+		name: 'Statistics',
+		href: '/dashboard/stadistics-sales',
+		current: false,
+	},
+	{
+		name: 'Create Transactions',
+		href: '/dashboard/create-transactions',
+		current: false,
+	},
+	{ name: 'Clients', href: '/dashboard/clients', current: false },
+	{ name: 'Sales List', href: '/dashboard/sales-list', current: false },
+	{ name: 'Add Tickets', href: '/dashboard/add-tickets', current: false },
 ];
 
 function classNames(...classes) {
