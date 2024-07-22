@@ -1,5 +1,6 @@
 // src/features/tickets/ticketSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSelector } from 'reselect';
 import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -83,5 +84,19 @@ const ticketSlice = createSlice({
 			});
 	},
 });
+
+export const selectAllTickets = (state) => state.tickets.tickets;
+
+export const selectSoldTickets = createSelector([selectAllTickets], (tickets) =>
+	tickets.filter((ticket) => ticket.status === 'Vendida'),
+);
+
+export const selectReservedTickets = createSelector([selectAllTickets], (tickets) =>
+	tickets.filter((ticket) => ticket.status === 'Reservado'),
+);
+
+export const selectAvailableTickets = createSelector([selectAllTickets], (tickets) =>
+	tickets.filter((ticket) => ticket.status === 'Disponible'),
+);
 
 export default ticketSlice.reducer;

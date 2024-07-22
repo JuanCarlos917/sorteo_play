@@ -13,6 +13,7 @@ import CreateTransaction from './adminDasboard/CreateTransaction';
 import UserList from './adminDasboard/UserList';
 import TransactionList from './adminDasboard/TransactionList';
 import TicketManager from './adminDasboard/TicketManager';
+import Statistics from './adminDasboard/Statistics';
 import UserForm from './components/UserForm';
 import Instructions from './components/Instructions';
 import NotFound404 from './components/NotFound404';
@@ -32,6 +33,7 @@ function App() {
 					/>
 					<Route path='clients' element={<UserList />} />
 					<Route path='sales-list' element={<TransactionList />} />
+					<Route path='stadistics-sales' element={<Statistics />} />
 				</Route>
 				<Route path='*' element={<NotFound404 />} />
 			</Route>,
