@@ -4,6 +4,7 @@ import { createUser } from '../features/users/userSlice';
 import { reserveTicket } from '../features/tickets/ticketSlice';
 import AvailableTickets from './AvailableTickets';
 import UserInfoForm from './UserInfoForm';
+import ImageCarousel from './ImageCarousel';
 import {
 	validateName,
 	validateEmail,
@@ -74,8 +75,12 @@ const UserForm = () => {
 
 	return (
 		<Container
+
 			maxWidth='sm'
 			className='flex min-h-full flex-col justify-center px-6 py-12 lg:px-8'>
+            <div>
+                <ImageCarousel />
+            </div>
 			<div className='sm:mx-auto sm:w-full sm:max-w-sm'>
 				<div className='flex justify-center items-center space-x-4'>
 					<img

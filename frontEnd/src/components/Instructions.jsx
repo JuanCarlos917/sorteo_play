@@ -40,10 +40,10 @@ const Instructions = () => {
 			className='p-8 rounded-lg shadow-lg text-gray-300 font-rubik '
 			sx={{
 				width: '100%',
-				bgcolor: '#cfd8dc',
+				bgcolor: '#b4bbcd',
 				padding: '16px',
 				borderRadius: '10px',
-				boxShadow: '0px 5px 9px rgba(0, 0, 0, 1.6)',
+				boxShadow: '2px 20px 10px rgba(0, 0, 0, 0.3)',
 			}}>
 			<div className='sm:mx-auto sm:w-full sm:max-w-sm pb-10'>
 				<img
