@@ -3,17 +3,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-	font-family: 'Rubik', sans-serif;
-}
-body {
-	background: rgb(180, 187, 205);
-	background: linear-gradient(
-		0deg,
-		rgb(180, 187, 205) 46%,
-		rgba(110, 119, 136, 1) 74%,
-		rgba(58, 68, 80, 1) 100%
-	);
-	font-family: 'Rubik', sans-serif;
-}
