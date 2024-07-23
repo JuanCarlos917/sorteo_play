@@ -32,10 +32,10 @@ const UserInfoForm = ({
 							borderColor: '#e0e0e0',
 						},
 						'&:hover fieldset': {
-							borderColor: '#c0c0c0',
+							borderColor: '#0074ff',
 						},
 						'&.Mui-focused fieldset': {
-							borderColor: '#bdbdbd',
+							borderColor: '#0074ff',
 						},
 					},
 				}}
@@ -60,10 +60,10 @@ const UserInfoForm = ({
 							borderColor: '#e0e0e0',
 						},
 						'&:hover fieldset': {
-							borderColor: '#c0c0c0',
+							borderColor: '#0074ff',
 						},
 						'&.Mui-focused fieldset': {
-							borderColor: '#bdbdbd',
+							borderColor: '#0074ff',
 						},
 					},
 				}}
@@ -88,10 +88,10 @@ const UserInfoForm = ({
 							borderColor: '#e0e0e0',
 						},
 						'&:hover fieldset': {
-							borderColor: '#c0c0c0',
+							borderColor: '#0074ff',
 						},
 						'&.Mui-focused fieldset': {
-							borderColor: '#bdbdbd',
+							borderColor: '#0074ff',
 						},
 					},
 				}}
