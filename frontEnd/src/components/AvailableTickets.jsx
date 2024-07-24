@@ -27,8 +27,11 @@ const AvailableTickets = ({
 	}, [dispatch]);
 
 	const availableTickets = tickets.filter(
-		(ticket) => ticket.status === 'Disponible',
+        (ticket) => ticket.status === 'Disponible',
 	);
+    console.log(availableTickets)
+
+	const sortedTickets = availableTickets.sort((a, b) => a.number - b.number);
 
 	useEffect(() => {
 		setTicketsAvailable(availableTickets.length > 0);
@@ -92,7 +95,7 @@ const AvailableTickets = ({
 						<MenuItem value=''>
 							<em>Seleccione un Número</em>
 						</MenuItem>
-						{availableTickets.map((ticket) => (
+						{sortedTickets.map((ticket) => (
 							<MenuItem key={ticket.id} value={ticket.id}>
 								{ticket.number}
 							</MenuItem>
