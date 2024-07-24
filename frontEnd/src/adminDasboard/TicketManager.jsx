@@ -73,7 +73,15 @@ const TicketManager = () => {
 					<tbody className='bg-white divide-y divide-gray-200'>
 						{Array.isArray(sortedTickets) &&
 							sortedTickets.map((ticket, index) => (
-								<tr key={index}>
+								<tr
+									key={index}
+									className={
+										ticket.status === 'Vendida'
+											? 'bg-green-100 text-green-800'
+											: ticket.status === 'Reservado'
+											? 'bg-yellow-100 text-yellow-800'
+											: 'bg-red-100 text-red-800'
+									}>
 									<td className='px-6 py-4 whitespace-nowrap'>
 										{ticket.number}
 									</td>
@@ -113,11 +121,7 @@ const TicketManager = () => {
 		content = <div>{error}</div>;
 	}
 
-	return (
-		<div>
-			{content}
-		</div>
-	);
+	return <div>{content}</div>;
 };
 
 export default TicketManager;
