@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTickets, deleteTicket } from '../features/tickets/ticketSlice';
+import TicketFilter from './TicketFilter';
 
 const TicketManager = () => {
 	const dispatch = useDispatch();
@@ -8,9 +9,42 @@ const TicketManager = () => {
 	const status = useSelector((state) => state.tickets.status);
 	const error = useSelector((state) => state.tickets.error);
 
+	const [filterText, setFilterText] = useState('');
+
 	useEffect(() => {
 		dispatch(fetchTickets());
 	}, [dispatch]);
+
+	const handleFilterTextChange = (text) => {
+		setFilterText(text);
+	};
+
+	const filteredTickets = tickets.filter((ticket) => {
+		const numberMatch = ticket.number.toString().includes(filterText);
+        const idTicket = ticket.id
+			?.toLowerCase()
+			.includes(filterText.toLowerCase());
+		const statusMatch = ticket.status
+			?.toLowerCase()
+			.includes(filterText.toLowerCase());
+		const buyerNameMatch = ticket.buyerName
+			?.toLowerCase()
+			.includes(filterText.toLowerCase());
+		const buyerContactMatch = ticket.buyerContact
+			?.toLowerCase()
+			.includes(filterText.toLowerCase());
+		const buyerEmailMatch = ticket.buyerEmail
+			?.toLowerCase()
+			.includes(filterText.toLowerCase());
+		return (
+            idTicket ||
+			numberMatch ||
+			statusMatch ||
+			buyerNameMatch ||
+			buyerContactMatch ||
+			buyerEmailMatch
+		);
+	});
 
 	let content;
 
@@ -18,7 +52,7 @@ const TicketManager = () => {
 		content = <div>Loading...</div>;
 	} else if (status === 'succeeded') {
 		// Ordenar las boletas para que las "Vendidas" aparezcan primero y luego por número
-		const sortedTickets = [...tickets].sort((a, b) => {
+		const sortedTickets = [...filteredTickets].sort((a, b) => {
 			if (a.status === 'Vendida' && b.status !== 'Vendida') {
 				return -1;
 			}
@@ -30,8 +64,12 @@ const TicketManager = () => {
 		});
 
 		content = (
-			<div className='overflow-x-auto pt-5'>
+			<div className='overflow-x-auto pt-20 p-2'>
 				<h2 className='text-xl font-bold mb-4'>Ticket list</h2>
+				<TicketFilter
+					filterText={filterText}
+					onFilterTextChange={handleFilterTextChange}
+				/>
 				<table className='min-w-full divide-y divide-gray-200'>
 					<thead className='bg-gray-50'>
 						<tr>

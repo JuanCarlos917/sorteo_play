@@ -99,25 +99,40 @@ const Instructions = () => {
 					className='text-lg'
 					sx={{ color: '#212121' }}>
 					5. Puedes enviar el dinero a Nequi, DaviPlata o Bancolombia:
-					<Box sx={{ display: 'flex', alignItems: 'center' }}>
-						Nequi y DaviPlata{' '}
-						<Button onClick={() => copyToClipboard('3132074757')}>
-							<ContentCopyIcon />
-						</Button>
-						<Typography variant='body1' sx={{ ml: 1 }}>
-							3132074757
-						</Typography>
-					</Box>
-					<Box sx={{ display: 'flex', alignItems: 'center' }}>
-						Bancolombia Ahorros{' '}
-						<Button onClick={() => copyToClipboard('94600021308')}>
-							<ContentCopyIcon />
-						</Button>
-						<Typography variant='body1' sx={{ ml: 1 }}>
-							94600021308
-						</Typography>
-					</Box>
 				</Typography>
+				<Box
+					className='text-lg'
+					sx={{
+						display: 'flex',
+						alignItems: 'center',
+						color: '#212121',
+						fontWeight: 'bold',
+					}}>
+					Nequi y DaviPlata{' '}
+					<Button onClick={() => copyToClipboard('3132074757')}>
+						<ContentCopyIcon />
+					</Button>
+					<Typography variant='body1' sx={{ ml: 1 }}>
+						3132074757
+					</Typography>
+				</Box>
+				<Box
+					className='text-lg'
+					sx={{
+						display: 'flex',
+						alignItems: 'center',
+						color: '#212121',
+						fontWeight: 'bold',
+					}}>
+					Bancolombia Ahorros{' '}
+					<Button onClick={() => copyToClipboard('94600021308')}>
+						<ContentCopyIcon />
+					</Button>
+					<Typography variant='body1' sx={{ ml: 1 }}>
+						94600021308
+					</Typography>
+				</Box>
+
 				<Typography
 					variant='h6'
 					component='p'

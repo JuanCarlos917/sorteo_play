@@ -4,6 +4,7 @@ import {
 	Route,
 	RouterProvider,
 	Outlet,
+	useLocation,
 } from 'react-router-dom';
 import './App.css'
 
@@ -58,7 +59,7 @@ const Root = () => {
 
 const Home = () => {
 	return (
-		<div className='content'>
+		<div className={`App ${useLocation().pathname.startsWith('/dashboard') ? 'dashboard-body' : 'client-body'}`}>
 			<UserForm />
 			<Instructions />
 		</div>

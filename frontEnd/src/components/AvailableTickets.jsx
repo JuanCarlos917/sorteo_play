@@ -29,7 +29,6 @@ const AvailableTickets = ({
 	const availableTickets = tickets.filter(
         (ticket) => ticket.status === 'Disponible',
 	);
-    console.log(availableTickets)
 
 	const sortedTickets = availableTickets.sort((a, b) => a.number - b.number);
 

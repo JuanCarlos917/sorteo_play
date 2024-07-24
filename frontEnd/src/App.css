@@ -15,7 +15,8 @@ html,
 	flex: 1;
 }
 
-body {
+/* Estilos para la parte del cliente */
+.client-body {
 	background: rgb(180, 187, 205);
 	background: linear-gradient(
 		0deg,
@@ -26,4 +27,9 @@ body {
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-size: cover;
+}
+
+/* Estilos para la parte del dashboard */
+.dashboard-body {
+	background: white;
 }
