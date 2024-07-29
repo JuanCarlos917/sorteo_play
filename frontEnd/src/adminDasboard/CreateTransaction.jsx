@@ -32,6 +32,7 @@ const CreateTransaction = () => {
 	const [cancelTransactionId, setCancelTransactionId] = useState(null);
 	const [paymentMethod, setPaymentMethod] = useState('');
 	const [message, setMessage] = useState('');
+	const [messageType, setMessageType] = useState('success');
 	const [filteredTickets, setFilteredTickets] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -110,11 +111,15 @@ const CreateTransaction = () => {
 						paymentMethod,
 					}),
 				).unwrap();
+				setMessageType('success');
+				setMessage('Transaction completed successfully.');
 			} else if (transactionType === 'cancellation') {
 				if (cancelTransactionId) {
 					await dispatch(
 						cancelTransaction(cancelTransactionId),
 					).unwrap();
+					setMessageType('success');
+					setMessage('Transaction cancelled successfully.');
 				} else {
 					alert('No purchase transaction found for this ticket.');
 				}
@@ -126,9 +131,11 @@ const CreateTransaction = () => {
 						new_ticket_id: newTicketId,
 					}),
 				).unwrap();
+				setMessageType('success');
+				setMessage('Ticket changed successfully.');
 			}
-			setMessage('Transaction completed successfully.');
 		} catch (error) {
+			setMessageType('error');
 			setMessage(`Error: ${error.message}`);
 		}
 		setIsLoading(false);
@@ -185,7 +192,7 @@ const CreateTransaction = () => {
 						</button>
 					</div>
 				</form>
-				<Message message={message} />
+				<Message message={message} type={messageType} />
 			</div>
 		</div>
 	);
