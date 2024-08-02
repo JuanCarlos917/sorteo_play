@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+    postgres:
+        image: postgres:latest
+        container_name: my_postgres_container
+        environment:
+            POSTGRES_USER: ${DB_USER}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            POSTGRES_DB: ${DB_NAME}
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        networks:
+            - my_network
+
+    backend:
+        image: sorteo-backend
+        container_name: sorteo-backend
+        command: npm run dev
+        build:
+            context: ./backEnd
+            dockerfile: Dockerfile
+        environment:
+            DB_HOST: ${DB_HOST}
+            DB_USER: ${DB_USER}
+            DB_PASSWORD: ${DB_PASSWORD}
+            DB_NAME: ${DB_NAME}
+            DB_PORT: ${DB_PORT}
+            BASE_URL: ${BASE_URL}
+            PORT: ${PORT}
+            JWT_SECRET: ${JWT_SECRET}
+            OUTLOOK_USER: ${OUTLOOK_USER}
+            OUTLOOK_PASSWORD: ${OUTLOOK_PASSWORD}
+            CLIENT_ID: ${CLIENT_ID}
+            CLIENT_SECRET: ${CLIENT_SECRET}
+            REFRESH_TOKEN: ${REFRESH_TOKEN}
+            REDIRECT_URI: ${REDIRECT_URI}
+            GMAIL_USER: ${GMAIL_USER}
+        ports:
+            - '3000:3000'
+        depends_on:
+            - postgres
+        networks:
+            - my_network
+
+    frontend:
+        image: sorteo-front
+        container_name: sorteo-front
+        build:
+            context: ./frontEnd
+            dockerfile: Dockerfile
+        environment:
+            VITE_BASE_URL: ${VITE_BASE_URL}
+        ports:
+            - '80:80'
+        depends_on:
+            - backend
+        networks:
+            - my_network
+
+networks:
+    my_network:
+
+volumes:
+    postgres_data:

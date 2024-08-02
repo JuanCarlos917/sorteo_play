@@ -30,9 +30,6 @@ const createTransaction = async (req, res) => {
 			const ticket = await Ticket.findByPk(ticket_id);
 			const user = await User.findByPk(user_id);
 
-			console.log('Ticket:', ticket);
-			console.log('User:', user);
-
 			if (ticket && ticket.status === 'Reservado' && user) {
 				ticket.status = 'Vendida';
 				await ticket.save();
@@ -73,14 +70,12 @@ const cancelTransaction = async (req, res) => {
 	try {
 		const transaction = await Transaction.findByPk(id);
 		if (!transaction) {
-			console.log('Transaction not found');
 			return res
 				.status(404)
 				.json({ error: 'Purchase transaction not found' });
 		}
 
 		if (transaction.transaction_type !== 'purchase') {
-			console.log('Transaction is not a purchase');
 			return res
 				.status(404)
 				.json({ error: 'Purchase transaction not found' });
@@ -88,13 +83,11 @@ const cancelTransaction = async (req, res) => {
 
 		const ticket = await Ticket.findByPk(transaction.ticket_id);
 		if (!ticket) {
-			console.log('Ticket not found');
 			return res.status(404).json({ error: 'Ticket not found' });
 		}
 
 		const user = await User.findByPk(transaction.user_id);
 		if (!user) {
-			console.log('User not found');
 			return res.status(404).json({ error: 'User not found' });
 		}
 
@@ -178,7 +171,6 @@ const changeTicket = async (req, res) => {
 		}
 
 		await sendChangeEmail(user.email, oldTicket.number, newTicket.number);
-		console.log('Correo de cambio enviado a', user.email);
 
 		res.status(200).json({
 			message: 'Ticket changed successfully',
