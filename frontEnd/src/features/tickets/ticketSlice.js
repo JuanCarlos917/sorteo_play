@@ -5,6 +5,7 @@ import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_BASE_URL;
 
+
 const initialState = {
 	tickets: [],
 	status: 'idle',
@@ -60,7 +61,9 @@ const ticketSlice = createSlice({
 			})
 			.addCase(fetchTickets.fulfilled, (state, action) => {
 				state.status = 'succeeded';
-				state.tickets = action.payload;
+				state.tickets = Array.isArray(action.payload)
+					? action.payload
+					: [];
 			})
 			.addCase(fetchTickets.rejected, (state, action) => {
 				state.status = 'failed';

@@ -46,3 +46,4 @@ backEnd/.env
 .env.test.local
 .env.production.local
 backEnd/.env.env
+.env.production
