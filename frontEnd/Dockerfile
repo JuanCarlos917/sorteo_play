@@ -9,6 +9,9 @@ COPY package*.json ./
 # Instalar dependencias
 RUN npm install
 
+# Copiar el archivo .env.production y renombrarlo a .env
+COPY .env.production .env
+
 # Copiar el resto del código de la aplicación
 COPY . .
 

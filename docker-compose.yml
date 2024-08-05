@@ -10,6 +10,8 @@ services:
             POSTGRES_DB: ${DB_NAME}
         volumes:
             - postgres_data:/var/lib/postgresql/data
+        ports:
+            - '5432:5432'
         networks:
             - my_network
 
@@ -20,22 +22,7 @@ services:
         build:
             context: ./backEnd
             dockerfile: Dockerfile
-        environment:
-            DB_HOST: ${DB_HOST}
-            DB_USER: ${DB_USER}
-            DB_PASSWORD: ${DB_PASSWORD}
-            DB_NAME: ${DB_NAME}
-            DB_PORT: ${DB_PORT}
-            BASE_URL: ${BASE_URL}
-            PORT: ${PORT}
-            JWT_SECRET: ${JWT_SECRET}
-            OUTLOOK_USER: ${OUTLOOK_USER}
-            OUTLOOK_PASSWORD: ${OUTLOOK_PASSWORD}
-            CLIENT_ID: ${CLIENT_ID}
-            CLIENT_SECRET: ${CLIENT_SECRET}
-            REFRESH_TOKEN: ${REFRESH_TOKEN}
-            REDIRECT_URI: ${REDIRECT_URI}
-            GMAIL_USER: ${GMAIL_USER}
+        env_file: .env.production
         ports:
             - '3000:3000'
         depends_on:
@@ -44,13 +31,11 @@ services:
             - my_network
 
     frontend:
-        image: sorteo-front
-        container_name: sorteo-front
         build:
             context: ./frontEnd
             dockerfile: Dockerfile
-        environment:
-            VITE_BASE_URL: ${VITE_BASE_URL}
+        container_name: sorteo-front
+        env_file: .env.production
         ports:
             - '80:80'
         depends_on:
