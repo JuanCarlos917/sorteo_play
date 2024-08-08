@@ -132,14 +132,31 @@ const Instructions = () => {
 						94600021308
 					</Typography>
 				</Box>
-
 				<Typography
 					variant='h6'
 					component='p'
 					className='text-lg'
-					sx={{ color: '#212121', fontWeight: 'bold' }}>
-					6. Envia tu comprobante de consignación al número 3132074757
-					Para registrar tu boleta y participar en el sorteo.
+					sx={{ color: '#212121' }}>
+					6. Para enviar el comprobante de pago del sorteo del PS5,
+					puedes hacerlo de dos maneras:
+				</Typography>
+				<Typography
+					variant='body1'
+					component='p'
+					className='text-base'
+					sx={{ mt: 2, color: '#212121' }}>
+					<strong>Opción 1:</strong> Envía un mensaje directamente al
+					número <strong>3132074757</strong> con el comprobante de
+					pago adjunto.
+				</Typography>
+				<Typography
+					variant='body1'
+					component='p'
+					className='text-base'
+					sx={{ mt: 1, color: '#212121' }}>
+					<strong>Opción 2:</strong> Haz clic en el botón de WhatsApp
+					flotante en la esquina inferior derecha de la pantalla.
+					Luego selecciona la opción “Enviar comprobante de pago”.
 				</Typography>
 				<Typography
 					variant='body2'
