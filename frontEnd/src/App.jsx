@@ -19,6 +19,7 @@ import UserForm from './components/UserForm';
 import Instructions from './components/Instructions';
 import NotFound404 from './components/NotFound404';
 import Footer from './components/Footer';
+import WhatsAppButton from './components/WhatsAppButton';
 
 function App() {
 	const router = createBrowserRouter(
@@ -62,6 +63,7 @@ const Home = () => {
 		<div className={`App ${useLocation().pathname.startsWith('/dashboard') ? 'dashboard-body' : 'client-body'}`}>
 			<UserForm />
 			<Instructions />
+            <WhatsAppButton />
 		</div>
 	);
 };
