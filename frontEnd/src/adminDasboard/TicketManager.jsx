@@ -5,7 +5,9 @@ import {
 	fetchTickets,
 	deleteTicket,
 } from '../features/tickets/ticketSlice';
+import { Box } from '@mui/material';
 import TicketFilter from './TicketFilter';
+import Loading from '../components/Loading';
 
 const TicketManager = () => {
 	const dispatch = useDispatch();
@@ -32,7 +34,11 @@ const TicketManager = () => {
 	let content;
 
 	if (status === 'loading') {
-		content = <div>Loading...</div>;
+		content = (
+			<Box display='flex' justifyContent='center' alignItems='center'>
+				<Loading />
+			</Box>
+		);
 	} else if (status === 'succeeded') {
 		if (!Array.isArray(tickets) || tickets.length === 0) {
 			content = <div>No tickets found</div>;

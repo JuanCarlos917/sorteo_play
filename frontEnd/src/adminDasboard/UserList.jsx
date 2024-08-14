@@ -5,6 +5,8 @@ import {
 	deleteUser,
 	updateUser,
 } from '../features/users/userSlice';
+import Loading from '../components/Loading';
+import { Box } from '@mui/material';
 
 const UserList = () => {
 	const dispatch = useDispatch();
@@ -31,8 +33,16 @@ const UserList = () => {
 
 	let content;
 
-	if (status === 'loading') {
-		content = <div>Loading...</div>;
+	if (status == 'loading') {
+		content = (
+			<Box
+				className='pt-10'
+				display='flex'
+				justifyContent='center'
+				alignItems='center'>
+				<Loading />
+			</Box>
+		);
 	} else if (status === 'succeeded') {
 		content = (
 			<div className='overflow-x-auto pt-5'>

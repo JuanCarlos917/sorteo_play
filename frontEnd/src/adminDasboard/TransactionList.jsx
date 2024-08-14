@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTransactions } from '../features/transactions/transactionSlice';
+import Loading from '../components/Loading';
+import { Box } from '@mui/material';
 
 const TransactionList = () => {
 	const dispatch = useDispatch();
@@ -17,7 +19,15 @@ const TransactionList = () => {
 	let content;
 
 	if (status === 'loading') {
-		content = <div>Loading...</div>;
+		content = (
+			<Box
+				className='pt-10'
+				display='flex'
+				justifyContent='center'
+				alignItems='center'>
+				<Loading />
+			</Box>
+		);
 	} else if (status === 'succeeded') {
 		content = (
 			<div className='overflow-x-auto pt-5'>
