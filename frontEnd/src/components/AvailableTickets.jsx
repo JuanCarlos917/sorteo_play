@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTickets } from '../features/tickets/ticketSlice';
 import {
-	CircularProgress,
 	MenuItem,
 	FormControl,
 	InputLabel,
@@ -11,6 +10,7 @@ import {
 	Typography,
 	Box,
 } from '@mui/material';
+import Loading from './Loading'
 
 const AvailableTickets = ({
 	onTicketChange,
@@ -41,7 +41,7 @@ const AvailableTickets = ({
 	if (status === 'loading') {
 		content = (
 			<Box display='flex' justifyContent='center' alignItems='center'>
-				<CircularProgress />
+				<Loading />
 			</Box>
 		);
 	} else if (status === 'succeeded') {
