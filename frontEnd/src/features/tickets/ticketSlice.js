@@ -31,6 +31,16 @@ export const createTicket = createAsyncThunk(
 	},
 );
 
+export const searchTickets = createAsyncThunk(
+	'tickets/searchTickets',
+	async (query = '') => {
+		const response = await axios.get(
+			`${API_BASE_URL}/api/tickets/search?query=${query}`,
+		);
+		return response.data;
+	},
+);
+
 export const deleteTicket = createAsyncThunk(
 	'tickets/deleteTicket',
 	async (id) => {
@@ -77,6 +87,17 @@ const ticketSlice = createSlice({
 					(ticket) => ticket.id !== action.payload,
 				);
 			})
+            .addCase(searchTickets.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(searchTickets.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.tickets = action.payload;
+            })
+            .addCase(searchTickets.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message;
+            })
 			.addCase(reserveTicket.fulfilled, (state, action) => {
 				const index = state.tickets.findIndex(
 					(ticket) => ticket.id === action.payload.id,
