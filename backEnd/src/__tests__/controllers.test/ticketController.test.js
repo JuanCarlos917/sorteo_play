@@ -1,8 +1,8 @@
 const request = require('supertest');
-const { v4: uuidv4 } = require('uuid');
 const app = require('../../app');
 const { Ticket, User } = require('../../index');
 const sequelize = require('../../db');
+const { v4: uuidv4 } = require('uuid');
 
 describe('Ticket Controller', () => {
 	beforeAll(async () => {
