@@ -6,7 +6,12 @@ const { v4: uuidv4 } = require('uuid');
 
 describe('Ticket Controller', () => {
 	beforeAll(async () => {
-		await sequelize.sync({ force: true }); // Sincroniza la base de datos antes de las pruebas
+		if (
+			process.env.NODE_ENV === 'test' ||
+			process.env.NODE_ENV === 'development'
+		) {
+			await sequelize.sync({ force: true });
+		}
 	});
 
 	afterAll(async () => {
@@ -42,7 +47,7 @@ describe('Ticket Controller', () => {
 	describe('POST /api/tickets/reserve', () => {
 		it('should reserve a ticket successfully', async () => {
 			const user = await User.create({
-				name: 'John Doe',
+				name: 'Juan Carlos Gomez',
 				phone: '123456789',
 				email: 'johndoe@example.com',
 			});
@@ -57,7 +62,7 @@ describe('Ticket Controller', () => {
 
 			expect(res.statusCode).toEqual(200);
 			expect(res.body.status).toBe('Reservado');
-			expect(res.body.buyerName).toBe('John Doe');
+			expect(res.body.buyerName).toBe('Juan Carlos Gomez');
 		});
 
 		const nonExistentTicketId = uuidv4(); // Genera un UUID que no existirá en la base de datos

@@ -14,7 +14,12 @@ jest.mock('../../services/emailServiceGmail', () => ({
 
 describe('Transaction Controller', () => {
 	beforeAll(async () => {
-		await sequelize.sync({ force: true }); // Asegura que la DB esté limpia
+		if (
+			process.env.NODE_ENV === 'test' ||
+			process.env.NODE_ENV === 'development'
+		) {
+			await sequelize.sync({ force: true });
+		}
 	});
 
 	afterEach(async () => {

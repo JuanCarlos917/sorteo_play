@@ -4,11 +4,11 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "node index.js",
-		"dev": "nodemon index.js",
+		"start": "NODE_ENV=production node index.js",
+		"dev": "NODE_ENV=development nodemon index.js",
 		"lint": "eslint src --ext .js",
-		"test": "jest",
-		"test:detect": "jest --detectOpenHandles"
+		"test": "NODE_ENV=test jest",
+		"test:detect": "NODE_ENV=test jest --detectOpenHandles"
 	},
 	"keywords": [],
 	"author": "",
