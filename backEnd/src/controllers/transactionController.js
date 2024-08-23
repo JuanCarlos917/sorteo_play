@@ -49,7 +49,7 @@ const createTransaction = async (req, res) => {
                     paymentMethod,
                 });
 
-                await sendConfirmationEmail(user.email, ticket.number, paymentMethod);
+                await sendConfirmationEmail(user.email, ticket.number, paymentMethod, user.name);
                 return res.status(201).json(newTransaction);
             } else {
                 return res.status(400).json({ error: 'Ticket not available for purchase or user not found' });
@@ -117,7 +117,7 @@ const changeTicket = async (req, res) => {
             await transaction.save();
         }
 
-        await sendChangeEmail(user.email, oldTicket.number, newTicket.number);
+        await sendChangeEmail(user.email, oldTicket.number, newTicket.number, user.name);
 
         return res.status(200).json({
             message: 'Ticket changed successfully',
@@ -176,7 +176,7 @@ const cancelTransaction = async (req, res) => {
 		});
 
 		// Send cancellation email
-		await sendCancellationEmail(user.email, ticket.number);
+		await sendCancellationEmail(user.email, ticket.number, user.name);
 
 		res.status(201).json(newTransaction);
 	} catch (error) {

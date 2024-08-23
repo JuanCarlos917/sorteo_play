@@ -43,7 +43,12 @@ const sendEmail = async (recipientEmail, subject, htmlContent) => {
 	return transporter.sendMail(mailOptions);
 };
 
-const sendConfirmationEmail = (recipientEmail, ticketNumber, paymentMethod) => {
+const sendConfirmationEmail = (
+	recipientEmail,
+	ticketNumber,
+	paymentMethod,
+	userName,
+) => {
 	const subject = '¡Confirmación de pago Sorteo PS5!';
 	const htmlContent = `
     <div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
@@ -51,7 +56,7 @@ const sendConfirmationEmail = (recipientEmail, ticketNumber, paymentMethod) => {
             <div style="text-align: center;">
                 <h1 style="color: #ff3d00;">¡Gracias por participar en el sorteo del PlayStation 5 Slim Digital!</h1>
             </div>
-            <p style="color: #333333;">Recibimos correctamente tu notificación de pago.</p>
+            <p style="color: #333333;">Hola ${userName}, te contirmo que recibimos correctamente tu notificación de pago.</p>
             <p style="color: #333333;">A continuación, encontrarás los detalles de tu participación:</p>
             <div style="background-color: #f4f4f4; padding: 10px; border-radius: 5px; margin-top: 10px;">
                 <p><strong>Método de Pago:</strong> ${paymentMethod}</p>
@@ -65,7 +70,7 @@ const sendConfirmationEmail = (recipientEmail, ticketNumber, paymentMethod) => {
 	return sendEmail(recipientEmail, subject, htmlContent);
 };
 
-const sendCancellationEmail = (recipientEmail, ticketNumber) => {
+const sendCancellationEmail = (recipientEmail, ticketNumber, userName) => {
 	const subject = '¡Cancelación de boleta Sorteo PS5!';
 	const htmlContent = `
     <div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
@@ -73,7 +78,7 @@ const sendCancellationEmail = (recipientEmail, ticketNumber) => {
             <div style="text-align: center;">
                 <h1 style="color: #ff3d00;">¡Boleta Cancelada!</h1>
             </div>
-            <p style="color: #333333;">Lamentamos informarte que tu boleta ha sido cancelada.</p>
+            <p style="color: #333333;">Hola ${userName}, Lamentamos informarte que tu boleta ha sido cancelada.</p>
             <p style="color: #333333;">Detalles del boleto cancelado:</p>
             <div style="background-color: #f4f4f4; padding: 10px; border-radius: 5px; margin-top: 10px;">
                 <p><strong>Número de Boleta:</strong> ${ticketNumber}</p>
@@ -86,7 +91,12 @@ const sendCancellationEmail = (recipientEmail, ticketNumber) => {
 	return sendEmail(recipientEmail, subject, htmlContent);
 };
 
-const sendChangeEmail = (recipientEmail, oldTicketNumber, newTicketNumber) => {
+const sendChangeEmail = (
+	recipientEmail,
+	oldTicketNumber,
+	newTicketNumber,
+	userName,
+) => {
 	const subject = 'Cambio de boleta Sorteo PS5';
 	const htmlContent = `
     <div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
@@ -94,7 +104,7 @@ const sendChangeEmail = (recipientEmail, oldTicketNumber, newTicketNumber) => {
             <div style="text-align: center;">
                 <h1 style="color: #ff3d00;">¡Cambio de boleta Sorteo PlayStation 5 Slim Digital!</h1>
             </div>
-            <p style="color: #333333;">Tu solicitud de cambio de boleta ha sido procesada exitosamente.</p>
+            <p style="color: #333333;">Hola ${userName}, tu solicitud de cambio de boleta ha sido procesada exitosamente.</p>
             <p style="color: #333333;">A continuación, encontrarás los detalles de tu cambio:</p>
             <div style="background-color: #f4f4f4; padding: 10px; border-radius: 5px; margin-top: 10px;">
                 <p><strong>Boleta Anterior:</strong> ${oldTicketNumber}</p>
