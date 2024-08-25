@@ -20,10 +20,7 @@ const {
 
 describe('Transaction Controller', () => {
 	beforeAll(async () => {
-		if (
-			process.env.NODE_ENV === 'test' ||
-			process.env.NODE_ENV === 'development'
-		) {
+		if (process.env.NODE_ENV === 'test') {
 			await sequelize.sync({ force: true });
 		}
 	});
@@ -34,6 +31,12 @@ describe('Transaction Controller', () => {
 		await User.destroy({ where: {} }); // Limpia los Usuarios después de cada prueba
 	});
 
+    afterAll(async () => {
+		if (process.env.NODE_ENV === 'test') {
+			await sequelize.close(); // Cierra la conexión de la base de datos después de todas las pruebas
+		}
+	});
+
 	describe('GET /api/transactions', () => {
 		it('should fetch all transactions', async () => {
 			const res = await request(app).get('/api/transactions');
@@ -42,55 +45,55 @@ describe('Transaction Controller', () => {
 		});
 	});
 
-describe('POST /api/transactions', () => {
-	it('should create a transaction successfully', async () => {
-		const ticket = await Ticket.create({
-			id: uuidv4(),
-			number: '001',
-			status: 'Reservado',
-		});
-		const user = await User.create({
-			id: uuidv4(),
-			name: 'John Doe',
-			email: 'john@example.com',
-			phone: '123-456-7890',
+	describe('POST /api/transactions', () => {
+		it('should create a transaction successfully', async () => {
+			const ticket = await Ticket.create({
+				id: uuidv4(),
+				number: '001',
+				status: 'Reservado',
+			});
+			const user = await User.create({
+				id: uuidv4(),
+				name: 'John Doe',
+				email: 'john@example.com',
+				phone: '123-456-7890',
+			});
+
+			const res = await request(app).post('/api/transactions').send({
+				user_id: user.id,
+				ticket_id: ticket.id,
+				transaction_type: 'purchase',
+				paymentMethod: 'Nequi',
+			});
+
+			expect(res.statusCode).toEqual(201);
+			expect(res.body).toHaveProperty('id');
+			await ticket.reload();
+			expect(ticket.status).toEqual('Vendida');
+
+			// Verificar que se llama a sendConfirmationEmail con el nombre del usuario
+			expect(sendConfirmationEmail).toHaveBeenCalledWith(
+				user.email,
+				ticket.number,
+				'Nequi',
+				user.name,
+			);
 		});
 
-		const res = await request(app).post('/api/transactions').send({
-			user_id: user.id,
-			ticket_id: ticket.id,
-			transaction_type: 'purchase',
-			paymentMethod: 'Nequi',
+		it('should return 400 if ticket is not available for purchase', async () => {
+			const res = await request(app).post('/api/transactions').send({
+				user_id: 999, // usuario inexistente
+				ticket_id: 999, // ticket inexistente
+				transaction_type: 'purchase',
+				paymentMethod: 'Nequi',
+			});
+
+			expect(res.statusCode).toEqual(400);
+			expect(res.body.error).toBe(
+				'Ticket not available for purchase or user not found',
+			);
 		});
-
-		expect(res.statusCode).toEqual(201);
-		expect(res.body).toHaveProperty('id');
-		await ticket.reload();
-		expect(ticket.status).toEqual('Vendida');
-
-		// Verificar que se llama a sendConfirmationEmail con el nombre del usuario
-		expect(sendConfirmationEmail).toHaveBeenCalledWith(
-			user.email,
-			ticket.number,
-			'Nequi',
-			user.name,
-		);
 	});
-
-	it('should return 400 if ticket is not available for purchase', async () => {
-		const res = await request(app).post('/api/transactions').send({
-			user_id: 999, // usuario inexistente
-			ticket_id: 999, // ticket inexistente
-			transaction_type: 'purchase',
-			paymentMethod: 'Nequi',
-		});
-
-		expect(res.statusCode).toEqual(400);
-		expect(res.body.error).toBe(
-			'Ticket not available for purchase or user not found',
-		);
-	});
-});
 
 	describe('POST /api/transactions/cancel/:id', () => {
 		it('should cancel a transaction successfully', async () => {
@@ -126,7 +129,7 @@ describe('POST /api/transactions', () => {
 			expect(sendCancellationEmail).toHaveBeenCalledWith(
 				user.email,
 				ticket.number,
-                user.name,
+				user.name,
 			);
 		});
 
@@ -181,7 +184,7 @@ describe('POST /api/transactions', () => {
 				user.email,
 				oldTicket.number,
 				newTicket.number,
-                user.name,
+				user.name,
 			);
 		});
 

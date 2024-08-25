@@ -6,12 +6,14 @@ const { v4: uuidv4 } = require('uuid');
 
 describe('Ticket Controller', () => {
 	beforeAll(async () => {
-		if (
-			process.env.NODE_ENV === 'test' ||
-			process.env.NODE_ENV === 'development'
-		) {
+		if (process.env.NODE_ENV === 'test') {
 			await sequelize.sync({ force: true });
 		}
+	});
+
+	afterEach(async () => {
+		await Ticket.destroy({ where: {} }); // Limpia los Tickets después de cada prueba
+		await User.destroy({ where: {} }); // Limpia los Usuarios después de cada prueba
 	});
 
 	afterAll(async () => {
@@ -90,6 +92,11 @@ describe('Ticket Controller', () => {
 
 	describe('GET /api/tickets/search', () => {
 		it('should return matching tickets based on search query', async () => {
+			await Ticket.create({
+				number: '001',
+				status: 'Disponible',
+			});
+
 			const res = await request(app).get('/api/tickets/search?query=001');
 			expect(res.statusCode).toEqual(200);
 			expect(res.body.length).toBeGreaterThan(0);
