@@ -1,25 +1,9 @@
 const request = require('supertest');
 const app = require('../../app');
 const { Ticket, User } = require('../../index');
-const sequelize = require('../../db');
 const { v4: uuidv4 } = require('uuid');
 
 describe('Ticket Controller', () => {
-	beforeAll(async () => {
-		if (process.env.NODE_ENV === 'test') {
-			await sequelize.sync({ force: true });
-		}
-	});
-
-	afterEach(async () => {
-		await Ticket.destroy({ where: {} }); // Limpia los Tickets después de cada prueba
-		await User.destroy({ where: {} }); // Limpia los Usuarios después de cada prueba
-	});
-
-	afterAll(async () => {
-		await sequelize.close(); // Cierra la conexión de la base de datos después de las pruebas
-	});
-
 	describe('GET /api/tickets', () => {
 		it('should fetch all tickets', async () => {
 			const res = await request(app).get('/api/tickets');

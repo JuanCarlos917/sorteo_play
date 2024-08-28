@@ -1,7 +1,6 @@
 const request = require('supertest');
 const app = require('../../app');
 const { Transaction, Ticket, User } = require('../../index');
-const sequelize = require('../../db');
 
 const { v4: uuidv4 } = require('uuid');
 const fakeUUID = uuidv4();
@@ -19,24 +18,6 @@ const {
 } = require('../../services/emailServiceGmail');
 
 describe('Transaction Controller', () => {
-	beforeAll(async () => {
-		if (process.env.NODE_ENV === 'test') {
-			await sequelize.sync({ force: true });
-		}
-	});
-
-	afterEach(async () => {
-		await Ticket.destroy({ where: {} }); // Limpia los Tickets después de cada prueba
-		await Transaction.destroy({ where: {} }); // Limpia las Transacciones después de cada prueba
-		await User.destroy({ where: {} }); // Limpia los Usuarios después de cada prueba
-	});
-
-    afterAll(async () => {
-		if (process.env.NODE_ENV === 'test') {
-			await sequelize.close(); // Cierra la conexión de la base de datos después de todas las pruebas
-		}
-	});
-
 	describe('GET /api/transactions', () => {
 		it('should fetch all transactions', async () => {
 			const res = await request(app).get('/api/transactions');

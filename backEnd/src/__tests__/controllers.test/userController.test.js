@@ -1,7 +1,6 @@
 const request = require('supertest');
 const app = require('../../app');
 const { User } = require('../../index');
-const sequelize = require('../../db');
 jest.mock('../../index', () => ({
 	User: {
 		create: jest.fn(),
@@ -12,22 +11,6 @@ jest.mock('../../index', () => ({
 }));
 
 describe('Users Controller', () => {
-	beforeAll(async () => {
-		if (process.env.NODE_ENV === 'test') {
-			await sequelize.sync({ force: true });
-		}
-	});
-
-	afterEach(async () => {
-		await User.destroy({ where: {} }); // Limpia los Usuarios después de cada prueba
-	});
-
-	afterAll(async () => {
-		if (process.env.NODE_ENV === 'test') {
-			await sequelize.close(); // Cierra la conexión de la base de datos después de todas las pruebas
-		}
-	});
-
 	describe('GET /api/users', () => {
 		it('should return an empty array when there are no users', async () => {
 			User.findAll.mockResolvedValue([]);

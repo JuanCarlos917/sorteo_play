@@ -1,4 +1,3 @@
-// config/database.js
 require('dotenv').config();
 
 const getDatabaseConfig = (env) => {
