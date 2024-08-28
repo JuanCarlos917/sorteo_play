@@ -33,11 +33,14 @@ describe('Ticket Controller', () => {
 	describe('POST /api/tickets/reserve', () => {
 		it('should reserve a ticket successfully', async () => {
 			const user = await User.create({
+				id: uuidv4(),
 				name: 'Juan Carlos Gomez',
-				phone: '123456789',
-				email: 'johndoe@example.com',
+				email: 'juan@example.com',
+				phone: '1234567890',
 			});
+
 			const ticket = await Ticket.create({
+				id: uuidv4(),
 				number: '001',
 				status: 'Disponible',
 			});

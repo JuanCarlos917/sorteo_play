@@ -1,5 +1,4 @@
-const { sequelize } = require('../src/db');
-const { Ticket, User, Transaction } = require('../src/index');
+const sequelize = require('../src/db');
 
 // Limpiar mocks antes de cada prueba
 beforeEach(() => {
@@ -16,9 +15,7 @@ beforeAll(async () => {
 			);
 
 			// Sincronizar tablas en el orden correcto
-			await User.sync({ force: true });
-			await Ticket.sync({ force: true });
-			await Transaction.sync({ force: true });
+			await sequelize.sync({ force: true });
 
 			console.log('Connection to test database is successful.');
 		} catch (error) {
@@ -29,10 +26,12 @@ beforeAll(async () => {
 
 afterEach(async () => {
 	try {
-		// Evitar deadlocks al truncar las tablas
-		await Transaction.destroy({ where: {}, truncate: true });
-		await Ticket.destroy({ where: {}, truncate: true });
-		await User.destroy({ where: {}, truncate: true });
+		// Truncar las tablas después de cada prueba
+		await sequelize.query(
+			'TRUNCATE "Transactions" RESTART IDENTITY CASCADE',
+		);
+		await sequelize.query('TRUNCATE "Tickets" RESTART IDENTITY CASCADE');
+		await sequelize.query('TRUNCATE "Users" RESTART IDENTITY CASCADE');
 		console.log('Database truncated successfully.');
 	} catch (error) {
 		console.error('Error truncating database:', error);

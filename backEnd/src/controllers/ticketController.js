@@ -2,7 +2,7 @@ const sequelize = require('../db');
 const { Op } = require('sequelize');
 const { Ticket, User } = require('../index');
 
-const { v4: uuidv4 } = require('uuid');
+const { validate: isUuid } = require('uuid');
 
 
 // Obtener todos los boletos
@@ -50,16 +50,23 @@ const createTickets = async (req, res) => {
 	}
 };
 
-// Reservar un boleto
 const reserveTicket = async (req, res) => {
 	const { ticket_id, user_id } = req.body;
 	try {
-		if (!uuidv4(ticket_id) || !uuidv4(user_id)) {
+		if (!isUuid(ticket_id) || !isUuid(user_id)) {
 			return res.status(400).json({ error: 'Invalid UUID format' });
 		}
 
 		const ticket = await Ticket.findByPk(ticket_id);
 		const user = await User.findByPk(user_id);
+
+		if (!ticket) {
+			console.error(`Ticket with ID ${ticket_id} not found`);
+		}
+
+		if (!user) {
+			console.error(`User with ID ${user_id} not found`);
+		}
 
 		if (ticket && ticket.status === 'Disponible' && user) {
 			ticket.status = 'Reservado';
