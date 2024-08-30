@@ -6,7 +6,7 @@ import {
 	Outlet,
 	useLocation,
 } from 'react-router-dom';
-import './App.css'
+import './App.css';
 
 import NavbarAdmin from './adminDasboard/NavbarAdmin';
 import AddTicketForm from './adminDasboard/AddTicketForm';
@@ -20,6 +20,7 @@ import Instructions from './components/Instructions';
 import NotFound404 from './components/NotFound404';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
+import LotteryResults from './components/LotteryResults';
 
 function App() {
 	const router = createBrowserRouter(
@@ -60,10 +61,16 @@ const Root = () => {
 
 const Home = () => {
 	return (
-		<div className={`App ${useLocation().pathname.startsWith('/dashboard') ? 'dashboard-body' : 'client-body'}`}>
+		<div
+			className={`App ${
+				useLocation().pathname.startsWith('/dashboard')
+					? 'dashboard-body'
+					: 'client-body'
+			}`}>
+			<LotteryResults />
 			<UserForm />
 			<Instructions />
-            <WhatsAppButton />
+			<WhatsAppButton />
 		</div>
 	);
 };
