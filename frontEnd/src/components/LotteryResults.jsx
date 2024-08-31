@@ -17,7 +17,7 @@ const LotteryResults = () => {
 		},
 		{
 			name: 'Medellín',
-			winningNumber: '',
+			winningNumber: 746,
 			date: '30 de Agosto 2024',
 			time: '23:00',
 		},
