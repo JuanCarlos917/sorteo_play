@@ -23,7 +23,7 @@ const LotteryResults = () => {
 		},
 		{
 			name: 'Boyacá',
-			winningNumber: '',
+			winningNumber: 332,
 			date: '31 de Agosto 2024',
 			time: '22:30',
 		},
@@ -35,7 +35,7 @@ const LotteryResults = () => {
 	useEffect(() => {
 		const shouldShowConfetti = lotteries.some(
 			(lottery) =>
-				lottery.winningNumber > 0 &&
+				lottery.winningNumber > 4000 &&
 				lottery.winningNumber <= ticketRange,
 		);
 
@@ -84,7 +84,10 @@ const LotteryResults = () => {
 									Esperando resultado
 								</p>
 							) : (
-								<p className='text-green-200'>Número Ganador</p>
+								//<p className='text-green-200'>Número Ganador</p>
+								<p className='text-red-200'>
+									Boleta no vendida
+								</p>
 							)}
 						</div>
 					))}
