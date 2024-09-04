@@ -169,9 +169,7 @@ const Instructions = () => {
 					dígitos supere el rango máximo de las boletas, se tomará los
 					últimos tres dígitos de la Lotería de Medellín y, en el
 					último caso, que ninguna de las dos se cumpla, se sorteará
-					con la Lotería de Boyacá. Si ninguno de los escenearios
-					anteriores se cumple, vuelve y se sortea al dia siguiente,
-					hasta que haya un ganador. El sorteo se realizará el 30 de
+					con la Lotería de Boyacá. El sorteo se realizará el 30 de
 					agosto de 2024 o cuando se hayan vendido todas las boletas,
 					lo que ocurra primero.
 				</Typography>
