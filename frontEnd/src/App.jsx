@@ -27,7 +27,7 @@ function App() {
 		createRoutesFromElements(
 			<Route path='/' element={<Root />}>
 				<Route index element={<Home />} />
-				<Route path='dashboard' element={<NavbarAdmin />}>
+				<Route path='admin-user' element={<NavbarAdmin />}>
 					<Route index element={<TicketManager />} />
 					<Route path='add-tickets' element={<AddTicketForm />} />
 					<Route
@@ -63,8 +63,8 @@ const Home = () => {
 	return (
 		<div
 			className={`App ${
-				useLocation().pathname.startsWith('/dashboard')
-					? 'dashboard-body'
+				useLocation().pathname.startsWith('/admin-user')
+					? 'admin-user-body'
 					: 'client-body'
 			}`}>
 			<LotteryResults />
