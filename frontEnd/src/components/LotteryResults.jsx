@@ -35,7 +35,7 @@ const LotteryResults = () => {
 	useEffect(() => {
 		const shouldShowConfetti = lotteries.some(
 			(lottery) =>
-				lottery.winningNumber > 4000 &&
+				lottery.winningNumber > 0 &&
 				lottery.winningNumber <= ticketRange,
 		);
 
@@ -62,7 +62,7 @@ const LotteryResults = () => {
 		<div className='top-0 bg-blue-500 text-white p-4 shadow-lg z-50'>
 			<div className='container mx-auto flex flex-col sm:flex-row items-center justify-between'>
 				<h2 className='text-lg sm:text-xl font-bold mb-4 sm:mb-0'>
-					<strong>Último</strong> Sorteo Loterías Resultado
+					<strong>Último Sorteo</strong>
 				</h2>
 				<div className='flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4'>
 					{lotteries.map((lottery, index) => (
@@ -84,10 +84,8 @@ const LotteryResults = () => {
 									Esperando resultado
 								</p>
 							) : (
-								//<p className='text-green-200'>Número Ganador</p>
-								<p className='text-red-200'>
-									Boleta no vendida
-								</p>
+								<p className='text-green-200'>Número Ganador</p>
+								//<p className='text-red-200'>Boleta no vendida</p>
 							)}
 						</div>
 					))}
