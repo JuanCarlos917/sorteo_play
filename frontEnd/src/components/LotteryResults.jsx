@@ -11,20 +11,20 @@ const LotteryResults = () => {
 	const lotteries = [
 		{
 			name: 'Bogotá',
-			winningNumber: 628,
-			date: '29 de Agosto 2024',
+			winningNumber: '',
+			date: '05 de Septiembre 2024',
 			time: '22:30',
 		},
 		{
 			name: 'Medellín',
-			winningNumber: 746,
-			date: '30 de Agosto 2024',
+			winningNumber: '',
+			date: '06 de Septiembre 2024',
 			time: '23:00',
 		},
 		{
 			name: 'Boyacá',
-			winningNumber: 332,
-			date: '31 de Agosto 2024',
+			winningNumber: '',
+			date: '07 de Septiembre 2024',
 			time: '22:30',
 		},
 	];
@@ -62,7 +62,7 @@ const LotteryResults = () => {
 		<div className='top-0 bg-blue-500 text-white p-4 shadow-lg z-50'>
 			<div className='container mx-auto flex flex-col sm:flex-row items-center justify-between'>
 				<h2 className='text-lg sm:text-xl font-bold mb-4 sm:mb-0'>
-					Último Sorteo Loterías Resultado
+					<strong>Último</strong> Sorteo Loterías Resultado
 				</h2>
 				<div className='flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4'>
 					{lotteries.map((lottery, index) => (
