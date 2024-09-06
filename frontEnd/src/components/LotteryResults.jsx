@@ -11,7 +11,7 @@ const LotteryResults = () => {
 	const lotteries = [
 		{
 			name: 'Bogotá',
-			winningNumber: '',
+			winningNumber: 405,
 			date: '05 de Septiembre 2024',
 			time: '22:30',
 		},
