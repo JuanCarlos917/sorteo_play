@@ -17,13 +17,13 @@ const LotteryResults = () => {
 		},
 		{
 			name: 'Medellín',
-			winningNumber: '',
+			winningNumber: 747,
 			date: '06 de Septiembre 2024',
 			time: '23:00',
 		},
 		{
 			name: 'Boyacá',
-			winningNumber: '',
+			winningNumber: 904,
 			date: '07 de Septiembre 2024',
 			time: '22:30',
 		},
