@@ -97,7 +97,7 @@ const Instructions = () => {
 					className='text-lg'
 					sx={{
 						fontFamily: '"Open Sans", sans-serif',
-						fontSize: '1rem',
+						fontSize: '1.2rem',
 						color: '#333',
 					}}>
 					3. Escribe tu email.
