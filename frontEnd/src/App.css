@@ -17,12 +17,12 @@ html,
 
 /* Estilos para la parte del cliente */
 .client-body {
-	background: rgb(180, 187, 205);
+	background: rgb(200, 190, 220);
 	background: linear-gradient(
 		0deg,
-		rgb(180, 187, 205) 58%,
-		rgba(110, 119, 136, 1) 78%,
-		rgba(58, 68, 80, 1) 100%
+		rgba(200, 190, 220, 1) 60%,
+		rgba(170, 160, 200, 1) 85%,
+		hsl(252, 26%, 21%) 100%
 	);
 	background-repeat: no-repeat;
 	background-attachment: fixed;
@@ -31,5 +31,5 @@ html,
 
 /* Estilos para la parte del dashboard */
 .dashboard-body {
-	background: white;
+	background: #dbd5ea;
 }

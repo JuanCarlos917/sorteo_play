@@ -75,32 +75,37 @@ const UserForm = () => {
 
 	return (
 		<Container
-
 			maxWidth='sm'
 			className='flex min-h-full flex-col justify-center px-6 py-12 lg:px-8'>
-            <div>
-                <ImageCarousel />
-            </div>
-			<div className='sm:mx-auto sm:w-full sm:max-w-sm'>
+			<div>
+				<ImageCarousel />
+			</div>
+			<div className='sm:mx-auto sm:w-full sm:max-w-sm mt-10'>
 				<div className='flex justify-center items-center space-x-4'>
 					<img
-						src='https://res.cloudinary.com/dcqkvu95d/image/upload/v1721510186/icons8-play-station_ffmjnt.svg'
+						src='https://res.cloudinary.com/dcqkvu95d/image/upload/v1730666215/regalo_nl5dlw.png'
 						alt='PlayStation Logo'
 						style={{ height: '50px', width: 'auto' }}
 					/>
 					<img
-						src='https://res.cloudinary.com/dcqkvu95d/image/upload/v1721510187/icon-ps5_cevnnq.svg'
+						src='https://res.cloudinary.com/dcqkvu95d/image/upload/v1730666298/ganador_yrcq0e.png'
 						alt='PS5'
-						style={{ height: '100px', width: 'auto' }}
+						style={{ height: '50px', width: 'auto' }}
 					/>
 				</div>
 				<Typography
 					component='h2'
-					variant='h5'
-					className='mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-black'>
-					Sorteo Play Station 5
+					variant='h1'
+					className='mt-10 text-center tracking-tight'
+					sx={{
+						fontFamily: '"Dancing Script", cursive', // Fuente cursiva específica
+						fontSize: '2.5rem', // Tamaño del texto más grande
+						fontWeight: 700, // Más negrita para hacerlo más oscuro
+						color: '#FFF6E3', // Color oscuro para el texto
+					}}>
+					Sorteo de $500.000
 				</Typography>
-				<Box
+				{/* <Box
 					display='flex'
 					justifyContent='center'
 					mt={2}
@@ -117,7 +122,7 @@ const UserForm = () => {
 						alt='FIFA 24'
 						style={{ height: '40px', width: 'auto' }}
 					/>
-				</Box>
+				</Box> */}
 			</div>
 			<Box
 				component='form'
