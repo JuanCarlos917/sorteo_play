@@ -148,16 +148,17 @@ const UserForm = () => {
 					fullWidth
 					disabled={!ticketsAvailable || isLoading}
 					sx={{
+						fontFamily: '"Dancing Script", cursive', // Fuente cursiva específica
+						color: '#FFF6E3',
 						mt: 2,
 						bgcolor: 'transparent',
 						background:
 							'linear-gradient(to right, #e0e0e0, transparent)',
-						color: '#212121',
 						borderRadius: '4px',
 						boxShadow: '0px 5px 9px rgba(0, 0, 0, 1.6)',
 						'&:hover': {
 							background:
-								'linear-gradient(to right, #ff3d00, transparent)',
+								'linear-gradient(to right, #FFF9BF, transparent)',
 						},
 						'&:focus-visible': {
 							outline: '2px solid #3b82f6',
