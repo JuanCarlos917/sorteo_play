@@ -17,7 +17,7 @@ const WhatsAppButton = () => {
 
 	const handleOptionClick = (message) => {
 		window.open(
-			`https://wa.me/3132074757?text=${encodeURIComponent(message)}`,
+			`https://wa.me/3142323534?text=${encodeURIComponent(message)}`,
 			'_blank',
 		);
 		handleClose();
@@ -46,7 +46,7 @@ const WhatsAppButton = () => {
 				<MenuItem
 					onClick={() =>
 						handleOptionClick(
-							'Hola, te envío el comprobante de pago del sorteo del PS5.',
+							'Hola, te envío el comprobante de pago del sorteo del Dinero',
 						)
 					}>
 					Enviar comprobante de pago
@@ -54,7 +54,7 @@ const WhatsAppButton = () => {
 				<MenuItem
 					onClick={() =>
 						handleOptionClick(
-							'Hola, tengo una duda sobre el sorteo del PS5',
+							'Hola, tengo una duda sobre el sorteo del Dinero',
 						)
 					}>
 					Tengo una duda 🤔

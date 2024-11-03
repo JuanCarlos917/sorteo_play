@@ -14,7 +14,7 @@ export default {
 				black: '#000000',
 			},
 			fontFamily: {
-				rubik: ['Rubik', 'sans-serif'],
+				cursive: ['"Dancing Script"', 'cursive'],
 			},
 		},
 	},

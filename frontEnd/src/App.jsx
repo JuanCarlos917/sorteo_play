@@ -67,7 +67,7 @@ const Home = () => {
 					? 'admin-user-body'
 					: 'client-body'
 			}`}>
-			<LotteryResults />
+			{/* <LotteryResults /> */}
 			<UserForm />
 			<Instructions />
 			<WhatsAppButton />

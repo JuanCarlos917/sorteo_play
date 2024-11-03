@@ -40,7 +40,7 @@ const Instructions = () => {
 			className='p-8 rounded-lg shadow-lg text-gray-300 font-rubik '
 			sx={{
 				width: '100%',
-				bgcolor: '#b4bbcd',
+				bgcolor: '#8c82b4',
 				padding: '16px',
 				borderRadius: '10px',
 				boxShadow: '2px 20px 10px rgba(0, 0, 0, 0.3)',
@@ -48,9 +48,9 @@ const Instructions = () => {
 			<div className='sm:mx-auto sm:w-full sm:max-w-sm pb-10'>
 				<img
 					className='mx-auto'
-					src='https://res.cloudinary.com/dcqkvu95d/image/upload/v1721510186/Sony_logo_d1lheu.svg'
+					src='https://res.cloudinary.com/dcqkvu95d/image/upload/v1730667452/estrategia_jxqzdd.png'
 					alt='logo PlayStation'
-					style={{ height: '20px', width: 'auto' }}
+					style={{ height: '60px', width: 'auto' }}
 				/>
 			</div>
 			<Typography
@@ -60,6 +60,10 @@ const Instructions = () => {
 				sx={{
 					color: '#000',
 					marginBottom: '9px',
+					fontFamily: '"Dancing Script", cursive', // Fuente cursiva específica
+					fontSize: '2.5rem', // Tamaño del texto más grande
+					fontWeight: 700, // Más negrita para hacerlo más oscuro
+					color: '#FFF6E3', // Color oscuro para el texto
 				}}>
 				Instrucciones para Participar en el Sorteo
 			</Typography>
@@ -68,7 +72,11 @@ const Instructions = () => {
 					variant='h6'
 					component='p'
 					className='text-lg'
-					sx={{ color: '#212121' }}>
+					sx={{
+						fontFamily: '"Open Sans", sans-serif',
+						fontSize: '1.2rem',
+						color: '#333',
+					}}>
 					1. Seleccionar una boleta. Cada boleta tiene un costo de{' '}
 					<strong>10 mil pesos.</strong>
 				</Typography>
@@ -76,29 +84,45 @@ const Instructions = () => {
 					variant='h6'
 					component='p'
 					className='text-lg'
-					sx={{ color: '#212121' }}>
+					sx={{
+						fontFamily: '"Open Sans", sans-serif',
+						fontSize: '1.2rem',
+						color: '#333',
+					}}>
 					2. Escribe tu nombre y apellido.
 				</Typography>
 				<Typography
 					variant='h6'
 					component='p'
 					className='text-lg'
-					sx={{ color: '#212121' }}>
+					sx={{
+						fontFamily: '"Open Sans", sans-serif',
+						fontSize: '1.2rem',
+						color: '#333',
+					}}>
 					3. Escribe tu email.
 				</Typography>
 				<Typography
 					variant='h6'
 					component='p'
 					className='text-lg'
-					sx={{ color: '#212121' }}>
+					sx={{
+						fontFamily: '"Open Sans", sans-serif',
+						fontSize: '1.2rem',
+						color: '#333',
+					}}>
 					4. Escribe tu número de teléfono.
 				</Typography>
 				<Typography
 					variant='h6'
 					component='p'
 					className='text-lg'
-					sx={{ color: '#212121' }}>
-					5. Puedes enviar el dinero a Nequi, DaviPlata o Bancolombia:
+					sx={{
+						fontFamily: '"Open Sans", sans-serif',
+						fontSize: '1.2rem',
+						color: '#333',
+					}}>
+					5. Puedes enviar el dinero a Nequi, DaviPlata o Davivienda:
 				</Typography>
 				<Box
 					className='text-lg'
@@ -107,13 +131,16 @@ const Instructions = () => {
 						alignItems: 'center',
 						color: '#212121',
 						fontWeight: 'bold',
+						fontFamily: '"Open Sans", sans-serif',
+						fontSize: '1.2rem',
+						color: '#333',
 					}}>
 					Nequi y DaviPlata{' '}
-					<Button onClick={() => copyToClipboard('3132074757')}>
+					<Button onClick={() => copyToClipboard('3142323534')}>
 						<ContentCopyIcon />
 					</Button>
 					<Typography variant='body1' sx={{ ml: 1 }}>
-						3132074757
+						3142323534
 					</Typography>
 				</Box>
 				<Box
@@ -123,55 +150,74 @@ const Instructions = () => {
 						alignItems: 'center',
 						color: '#212121',
 						fontWeight: 'bold',
+						fontFamily: '"Open Sans", sans-serif',
+						fontSize: '1.2rem',
+						color: '#333',
 					}}>
-					Bancolombia Ahorros{' '}
+					Davienda Ahorros{' '}
 					<Button onClick={() => copyToClipboard('94600021308')}>
 						<ContentCopyIcon />
 					</Button>
 					<Typography variant='body1' sx={{ ml: 1 }}>
-						94600021308
+						476200088062
 					</Typography>
 				</Box>
 				<Typography
 					variant='h6'
 					component='p'
 					className='text-lg'
-					sx={{ color: '#212121' }}>
-					6. Para enviar el comprobante de pago del sorteo del PS5,
-					puedes hacerlo de dos maneras:
+					sx={{
+						fontFamily: '"Open Sans", sans-serif',
+						fontSize: '1.2rem',
+						color: '#333',
+					}}>
+					6. Para enviar el comprobante de pago del sorteo de $500 Mil
+					pesos, puedes hacerlo de dos maneras:
 				</Typography>
 				<Typography
 					variant='body1'
 					component='p'
 					className='text-base'
-					sx={{ mt: 2, color: '#212121' }}>
-					<strong>Opción 1:</strong> Envía un mensaje directamente al
-					número <strong>3132074757</strong> con el comprobante de
-					pago adjunto.
-				</Typography>
-				<Typography
-					variant='body1'
-					component='p'
-					className='text-base'
-					sx={{ mt: 1, color: '#212121' }}>
-					<strong>Opción 2:</strong> Haz clic en el botón de WhatsApp
+					sx={{
+						fontFamily: '"Open Sans", sans-serif',
+						fontSize: '1rem',
+						color: '#333',
+					}}>
+					<strong>Opción 1:</strong> Haz clic en el botón de WhatsApp
 					flotante en la esquina inferior derecha de la pantalla.
-					Luego selecciona la opción “Enviar comprobante de pago”.
+					Luego selecciona la opción{' '}
+					<strong>Enviar comprobante de pago</strong>
+				</Typography>
+				<Typography
+					variant='body1'
+					component='p'
+					className='text-base'
+					sx={{
+						fontFamily: '"Open Sans", sans-serif',
+						fontSize: '1rem',
+						color: '#333',
+					}}>
+					<strong>Opción 2:</strong> Envía un mensaje directamente al
+					número <strong>3142323534</strong> con el comprobante de
+					pago adjunto.
 				</Typography>
 				<Typography
 					variant='body2'
 					component='p'
 					className='text-sm mt-6'
-					sx={{ color: '#212121', marginTop: '24px' }}>
-					Se sorteará un Play Station 5 Slim digital y el premio se
-					entregará con los tres últimos dígitos de la Lotería de
-					Bogotá. En el evento que el rango de los últimos tres
-					dígitos supere el rango máximo de las boletas, se tomará los
-					últimos tres dígitos de la Lotería de Medellín y, en el
-					último caso, que ninguna de las dos se cumpla, se sorteará
-					con la Lotería de Boyacá. El sorteo se realizará el 30 de
-					agosto de 2024 o cuando se hayan vendido todas las boletas,
-					lo que ocurra primero.
+					sx={{
+						marginTop: '24px',
+						fontFamily: '"Open Sans", sans-serif',
+						fontSize: '0.9rem',
+						color: '#333',
+					}}>
+					Se sorteará un valor de $500.000 (Quinientos mil pesos MLC)
+					y el premio se entregará con los tres últimos dígitos de la
+					Lotería de Bogotá. En el evento que el rango de los últimos
+					tres dígitos supere el rango máximo de las boletas, se
+					tomará los últimos tres dígitos de la Lotería de Boyacá. El
+					sorteo se realizará el 5 de diciembre de 2024 o cuando se
+					hayan vendido todas las boletas, lo que ocurra primero.
 				</Typography>
 			</Box>
 			<Snackbar
