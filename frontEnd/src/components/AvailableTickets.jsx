@@ -57,7 +57,7 @@ const AvailableTickets = ({
 					<InputLabel
 						id='ticket-select-label'
 						sx={{
-							color: '#f73b00',
+							color: '#C62E2E',
 							'&.Mui-focused': {
 								color: '#263238',
 							},
