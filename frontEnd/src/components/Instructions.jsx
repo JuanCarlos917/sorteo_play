@@ -216,7 +216,7 @@ const Instructions = () => {
 					Lotería de Bogotá. En el evento que el rango de los últimos
 					tres dígitos supere el rango máximo de las boletas, se
 					tomará los últimos tres dígitos de la Lotería de Boyacá. El
-					sorteo se realizará el 5 de diciembre de 2024 o cuando Se
+					sorteo se realizará el 5 de diciembre de 2024 o cuando se
 					haya vendido la totalidad de las boletas, lo que ocurra
 					primero.
 				</Typography>
