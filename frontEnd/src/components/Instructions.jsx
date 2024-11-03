@@ -155,7 +155,7 @@ const Instructions = () => {
 						color: '#333',
 					}}>
 					Davienda Ahorros{' '}
-					<Button onClick={() => copyToClipboard('94600021308')}>
+					<Button onClick={() => copyToClipboard('476200088062')}>
 						<ContentCopyIcon />
 					</Button>
 					<Typography variant='body1' sx={{ ml: 1 }}>
